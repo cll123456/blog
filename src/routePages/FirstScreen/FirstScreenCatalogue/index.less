@@ -1,0 +1,19 @@
+.container{
+  color: #ccc;
+  z-index: 100;
+  position: absolute;
+  width: 100%;
+  height: 50px;
+  text-align: center;
+  top: 60%;
+
+  a{
+    margin-right: 50px;
+    font-size: 30px;   
+    color: @primary-color;
+
+    &:hover{
+      color: fade(@primary-color,20%);
+    }
+  }
+}
