@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Particles, { ClickMode, DivType, EasingType } from 'react-tsparticles'
-
 export default function MyParticles() {
+  document.body.style.setProperty('--main-bg-color', '#f0f2f7')
+  const color = document.body.style.getPropertyValue('--main-bg-color')
+  // 刷新组件
+  const [,reloadComp] = useState({});
+  
   return (
     <Particles
       id="myParticles"
@@ -10,7 +14,7 @@ export default function MyParticles() {
           "autoPlay": true,
           "background": {
             "color": {
-              "value": "#fff"
+              "value": color
             },
             "image": "",
             "position": "",
