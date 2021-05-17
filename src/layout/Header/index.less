@@ -1,0 +1,43 @@
+@import url('./../../assets/style/common.less');
+
+.header-container {
+  background-color: transparent;
+  position: fixed;
+  height: 50px;
+  transform-origin: top;
+  left: 0;
+  right: 0;
+  transition: .5s;
+
+  .inner-container {
+    .common-container();
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+
+    .header-img {
+      width: 250px;
+    }
+
+    .header-changeSkin{
+      width: 100px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .header-search{
+      width: calc(100% - 350px);
+    }
+    
+  }
+
+
+  &:hover {
+    cursor: url('./../../assets/imgs/cursor/hand-link.cur'), pointer;
+    background: rgba(var(--header-bg-hover-color), .8);
+    box-shadow: 0 3px 5px rgb(31 45 61 / 5%), 0 2px 3px rgb(31 45 61 / 8%), inset 0 -1px hsl(0deg 0% 100% / 5%);
+    width: 100%;
+  }
+}

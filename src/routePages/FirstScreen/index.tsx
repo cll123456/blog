@@ -6,7 +6,7 @@ import StartLoading from './StarLoading'
 import TypeWriter from './TypeWriter'
 export default function FirstScreen() {
   const typeWriterData = ['More interest, less interests! —— Jerry',
-    '仰望星空，你我皆是繁星点点。—— Twinkle']
+    '仰望星空，你我皆是繁星点点。—— Twinkle'];
   return (
     <div className='firstScreen-container'>
       {/* 动画 */}
