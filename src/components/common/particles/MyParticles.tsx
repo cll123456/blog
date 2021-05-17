@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
+import { useStore } from 'react-redux'
 import Particles, { ClickMode, DivType, EasingType } from 'react-tsparticles'
+import { IStore } from '../../../types/store/action';
 export default function MyParticles() {
-  document.body.style.setProperty('--main-bg-color', '#f0f2f7')
-  const color = document.body.style.getPropertyValue('--main-bg-color')
-  // 刷新组件
-  const [,reloadComp] = useState({});
+  // 获取state
+  const state:IStore = useStore().getState();
+  document.body.style.setProperty('--main-bg-color', state.header.bgColor);
+  const color = document.body.style.getPropertyValue('--main-bg-color');
   
   return (
     <Particles
