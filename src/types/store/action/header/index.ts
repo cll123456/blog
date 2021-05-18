@@ -21,9 +21,11 @@ export enum EbgColor {
   /**
    * 晚上的颜色
    */
-  Moon = '#28374A'
+  Moon = '#28374a'
 }
-
+/**
+ * header背景
+ */
 export enum EHeaderBgColor {
    /**
    * 白天的颜色
@@ -32,5 +34,5 @@ export enum EHeaderBgColor {
     /**
      * 晚上的颜色
      */
-    Moon = '#34425A'
+    Moon = '#141414'
 }
