@@ -4,7 +4,9 @@ import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [reactRefresh()],
+  plugins: [
+    reactRefresh(),
+  ],
   base: './',//打包路径
   // 别名
   resolve: {
@@ -31,5 +33,16 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, '') // 如果不需要api 直接把路径上的api 替换成空，这个
       }
     },
+  },
+  build: {
+    // rollupOptions: {
+    //   output: {
+    //     manualChunks(id) {
+    //       if (id.includes('node_modules')) {
+    //         return id.toString().split('node_modules/')[1].split('/')[0].toString();
+    //       }
+    //     }
+    //   }
+    // }
   }
 })

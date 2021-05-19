@@ -9,6 +9,10 @@ import { EbgColor, EHeaderBgColor } from '../types/store/action/header'
 import Header from './Header'
 import MyMenu from './MyMenu'
 import './index.less'
+import dark from './../assets/style/index.dark.less'
+import lighter from './../assets/style/index.less'
+
+
 
 export default function Layout() {
   // 刷新组件
@@ -20,13 +24,12 @@ export default function Layout() {
     store.dispatch(changeBgColor(checked ? EbgColor.Sun : EbgColor.Moon));
     // 改变头部背景颜色
     store.dispatch(changeHeaderBgColor(checked ? EHeaderBgColor.Sun : EHeaderBgColor.Moon));
-
     if (checked) {
       // 明亮主题
-      window.location.reload();
+      addSkin(lighter)
     } else {
-      import('./../assets/style/index.dark.less')
-     
+      // 暗色主题
+      addSkin(dark)
     }
     reloadComp({});
   }
@@ -94,4 +97,26 @@ function composeBody(handleSkin: (checked: boolean) => void) {
     )
   }
   return body;
+}
+
+/**
+ * 添加主题，黑色和白色
+ * @param path 
+ */
+function addSkin(content: string) {
+  let head = document.getElementsByTagName("head")[0];
+  const getStyle = head.getElementsByTagName('style');
+  // 查找style是否存在，存在的话需要删除dom
+  if (getStyle.length > 0) {
+    for (let i = 0, l = getStyle.length; i < l; i++) {
+      if (getStyle[i].getAttribute('data-type') === 'theme') {
+        getStyle[i].remove();
+      }
+    }
+  }
+  // 最后加入对应的主题和加载less的js文件
+  let styleDom = document.createElement("style");
+  styleDom.dataset.type = "theme";
+  styleDom.innerHTML = content;
+  head.appendChild(styleDom);
 }
