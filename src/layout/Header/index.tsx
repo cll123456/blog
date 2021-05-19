@@ -17,7 +17,9 @@ export default function Header(props: ILayoutHeader, ref: Ref<IHeaderRef>) {
   return (
     <div className='header-container'>
       <div className="inner-container">
-        <div className="header-img">头像</div>
+        <div className="header-img">
+          <img src='./../../src/assets/imgs/header/atvar.jpg'></img>
+        </div>
         <div className="header-search">
           <Input size="large" placeholder="搜索您想要的……" allowClear prefix={<SearchOutlined />} />
         </div>
