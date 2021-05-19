@@ -12,8 +12,6 @@ import './index.less'
 import dark from './../assets/style/index.dark.less'
 import lighter from './../assets/style/index.less'
 
-
-
 export default function Layout() {
   // 刷新组件
   const [, reloadComp] = useState({});
@@ -24,6 +22,8 @@ export default function Layout() {
     store.dispatch(changeBgColor(checked ? EbgColor.Sun : EbgColor.Moon));
     // 改变头部背景颜色
     store.dispatch(changeHeaderBgColor(checked ? EHeaderBgColor.Sun : EHeaderBgColor.Moon));
+    console.log(dark);
+    
     if (checked) {
       // 明亮主题
       addSkin(lighter)
