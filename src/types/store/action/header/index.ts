@@ -4,9 +4,9 @@ export interface IHeaderStore {
    * 背景颜色
    */
   bgColor: EbgColor,
-/**
- * 头部颜色
- */
+  /**
+   * 头部颜色
+   */
   headerBgColor: EHeaderBgColor
 }
 
@@ -27,12 +27,12 @@ export enum EbgColor {
  * header背景
  */
 export enum EHeaderBgColor {
-   /**
-   * 白天的颜色
+  /**
+  * 白天的颜色
+  */
+  Sun = 'rgba(255,255,255,0.8)',
+  /**
+   * 晚上的颜色
    */
-    Sun = '#ffffff',
-    /**
-     * 晚上的颜色
-     */
-    Moon = '#141414'
+  Moon = 'rgba(20,20,20,0.8)'
 }
