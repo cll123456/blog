@@ -1,18 +1,53 @@
 /*
 公共背景的宽度
 */
-.common-container(){
-  margin: 0px auto;
-    
-  @media (min-width: 768px) {
-      width: 750px
-  }
-  
-  @media (min-width: 992px) {
-      width: 970px
-  }
-  
-  @media (min-width: 1200px) {
-      width: 1170px
-  }
+.common-container() {
+    margin: 0px auto;
+
+    @media (min-width: 768px) {
+        width: 750px
+    }
+
+    @media (min-width: 992px) {
+        width: 970px
+    }
+
+    @media (min-width: 1200px) {
+        width: 1170px
+    }
+}
+
+/**距离左边5px**/
+.m-l-5() {
+    margin-left: 5px;
+}
+
+/**距离右边5px**/
+.m-r-5 {
+    margin-right: 5px;
+}
+
+/**距离下边5px**/
+.m-b-5() {
+    margin-bottom: 5px;
+}
+
+/**距离上边5px**/
+.m-t-5 {
+    margin-top: 5px;
+}
+
+/**文字超出一行打点**/
+.txt-one-dot {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+/**文字超出多行行打点**/
+.txt-more-dot(@num: 2) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: @num;
 }

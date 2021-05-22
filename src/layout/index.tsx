@@ -4,8 +4,8 @@ import { renderRoutes } from 'react-router-config'
 import { BrowserRouter } from 'react-router-dom'
 import { routes } from '../routes'
 import store from '../store'
-import { changeBgColor, changeHeaderBgColor } from '../store/actions/header'
-import { EbgColor, EHeaderBgColor } from '../types/store/action/header'
+import { changeBgColor, changeHeaderBgColor, changeMainCompBgColor } from '../store/actions/header'
+import { EbgColor, EHeaderBgColor, EMainBodyCompBgColor } from '../types/store/action/header'
 import Header from './Header'
 import MyMenu from './MyMenu'
 import './index.less'
@@ -18,11 +18,12 @@ export default function Layout() {
 
   // 改变皮肤的方法
   const handleSkin = (checked: boolean) => {
-    // 修改背景颜色
+    // 修改canvas背景颜色
     store.dispatch(changeBgColor(checked ? EbgColor.Sun : EbgColor.Moon));
     // 改变头部背景颜色
     store.dispatch(changeHeaderBgColor(checked ? EHeaderBgColor.Sun : EHeaderBgColor.Moon));
-    console.log(dark);
+    // 改变组件以及其他背景颜色
+    store.dispatch(changeMainCompBgColor(checked ? EMainBodyCompBgColor.Sun : EMainBodyCompBgColor.Moon));
     
     if (checked) {
       // 明亮主题

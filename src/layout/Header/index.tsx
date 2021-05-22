@@ -14,6 +14,8 @@ export default function Header(props: ILayoutHeader, ref: Ref<IHeaderRef>) {
   // 获取状态
   const state:IStore = useStore().getState();
   document.body.style.setProperty('--header-bg-hover-color', state.header.headerBgColor);
+  document.body.style.setProperty('--main-comp-bg-color', state.header.bodyCompBgColor);
+  
   return (
     <div className='header-container'>
       <div className="inner-container">
