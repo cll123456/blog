@@ -3,8 +3,28 @@ import { DownOutlined, UpOutlined, BookOutlined, FolderOutlined } from '@ant-des
 import React from 'react'
 import { ICarouselData, ICarouselProps } from '../../../types/layout/carousel'
 import './index.less'
+// 定时器
+let carouselTimer: (number | null) = null;
 
 export default function Carousel(props: ICarouselProps) {
+
+  // 启动一个计时器
+  const handleTimer = () => {
+    cancelTimer();
+    carouselTimer = window.setInterval(() => {
+      props.onNext(props.curIndex + 1)
+    }, props.timer)
+  }
+
+  // 取消定时器
+  const cancelTimer = () => {
+    if (carouselTimer) {
+      window.clearInterval(carouselTimer)
+    }
+  }
+
+  // 启动定时器
+  handleTimer();
 
   // generate dom
   const carouselDom = props.data.map((p: ICarouselData, index: number) => {
@@ -19,9 +39,8 @@ export default function Carousel(props: ICarouselProps) {
       </li>
     )
   })
-
   return (
-    <div className='carousel-container'>
+    <div className='carousel-container' onMouseEnter={cancelTimer} onMouseLeave={handleTimer}>
       {/* 背景 */}
       <div className="bg-img" style={{
         backgroundImage: `url(${props.data[props.curIndex].imgUrl})`

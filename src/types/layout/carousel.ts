@@ -23,7 +23,7 @@ export interface ICarouselProps {
   /**
    * 轮播图所需要的数据
    */
-  data:  ICarouselData[],
+  data: ICarouselData[],
   /**
    * 当前显示第几个，
    */
@@ -31,10 +31,13 @@ export interface ICarouselProps {
   /**
    * 上一张
    */
-  onPre: (curIndex: number)=>void,
+  onPre: (curIndex: number) => void,
   /**
    * 下一张
    */
-  onNext: (curIndex: number)=>void,
-
+  onNext: (curIndex: number) => void,
+  /**
+   * 定时器的时间
+   */
+  timer: number
 }

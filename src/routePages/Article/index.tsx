@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import Carousel from '../../components/core/Carousel'
 import { IArticleState } from '../../types/page/article'
 import './index.less'
+import { Divider } from 'antd';
 
 export default class Article extends PureComponent<{}, IArticleState> {
   state: IArticleState = {
@@ -28,7 +29,12 @@ export default class Article extends PureComponent<{}, IArticleState> {
   /**
    * 轮播内容dom,为了添加动画
    */
-  private carouselContDom!: Element
+  private carouselContDom!: Element;
+
+  /**
+   * 定时器
+   */
+  private timer!: number;
   /**
    * 上一张图片
    * @param curIndex 
@@ -76,7 +82,8 @@ export default class Article extends PureComponent<{}, IArticleState> {
   render() {
     return (
       <div className='article-container'>
-        <Carousel data={this.state.carouselArr} curIndex={this.state.curIndex} onPre={this.onPre} onNext={this.onNext} />
+        <Carousel timer={5000} data={this.state.carouselArr} curIndex={this.state.curIndex} onPre={this.onPre} onNext={this.onNext} />
+        <Divider dashed orientation="left">全部文章</Divider>
       </div>
     )
   }
