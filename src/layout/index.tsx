@@ -13,6 +13,7 @@ import dark from './../assets/style/index.dark.less'
 import lighter from './../assets/style/index.less'
 import MyTips from './MyTips'
 import { tipObj } from '../types/layout/myTips'
+import Footer from './Footer'
 
 export default function Layout() {
   // 刷新组件
@@ -26,7 +27,7 @@ export default function Layout() {
     store.dispatch(changeHeaderBgColor(checked ? EHeaderBgColor.Sun : EHeaderBgColor.Moon));
     // 改变组件以及其他背景颜色
     store.dispatch(changeMainCompBgColor(checked ? EMainBodyCompBgColor.Sun : EMainBodyCompBgColor.Moon));
-    
+
     if (checked) {
       // 明亮主题
       addSkin(lighter)
@@ -56,7 +57,7 @@ export default function Layout() {
  * @returns 
  */
 function composeBody(handleSkin: (checked: boolean) => void) {
-  const data:tipObj[] = [
+  const data: tipObj[] = [
     {
       imgUrl: 'https://img-blog.csdnimg.cn/20210413163532791.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64',
       title: 'React',
@@ -112,6 +113,8 @@ function composeBody(handleSkin: (checked: boolean) => void) {
             {renderRoutes(routes)}
           </div>
         </div>
+        {/* 尾巴 */}
+        <Footer key={'footer'}></Footer>
       </div>
     )
   } else {
@@ -130,6 +133,8 @@ function composeBody(handleSkin: (checked: boolean) => void) {
             {renderRoutes(routes)}
           </div>
         </div>
+        {/* 尾巴 */}
+        <div key={'footer'}></div>
       </div>
     )
   }

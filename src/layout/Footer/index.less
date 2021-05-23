@@ -1,0 +1,28 @@
+@import './../../assets/style/common.less';
+.footer-container{
+  .common-container();
+  transition: all .25s;
+  height: 100px;
+  background-color: var(--main-comp-bg-color);
+  .m-t-5();
+  text-align: center;
+  line-height: 30px;
+  cursor: url(./../../assets/imgs/cursor/hand-link.cur),auto;
+  user-select: none;
+
+  p{
+    &:nth-of-type(1){
+      padding-top: 20px;
+    }
+
+    &:nth-of-type(2){
+      img{
+        vertical-align: middle;
+      }
+      span{
+        vertical-align: middle;
+        margin-left: 5px;
+      }
+    }
+  }
+}

@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import Carousel from '../../components/core/Carousel'
 import { IArticleState } from '../../types/page/article'
 import './index.less'
-import { Divider } from 'antd';
+import { Divider, Pagination } from 'antd';
 import MyCard from '../../components/core/MyCard';
 import ArticleList from './ArticleList';
 
@@ -147,8 +147,10 @@ export default class Article extends PureComponent<{}, IArticleState> {
         {/* 全部文章 */}
         <Divider dashed orientation="left">全部文章</Divider>
         {/* 全部文章列表 */}
-        <div className="article-list">
-          <ArticleList articleList={this.state.articleArr}></ArticleList>
+        <ArticleList articleList={this.state.articleArr}></ArticleList>
+        {/* 分页 */}
+        <div className="page-container">
+          <Pagination defaultCurrent={1} total={50} />
         </div>
       </div>
     )
