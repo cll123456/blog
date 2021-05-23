@@ -1,3 +1,4 @@
+import { IMyCardProps } from "../components/myCard";
 import { ICarouselData } from "../layout/carousel";
 
 export interface IArticleState {
@@ -9,4 +10,15 @@ export interface IArticleState {
    * 轮播图片
    */
   carouselArr: ICarouselData[],
+  /**
+   * 文章列表
+   */
+  articleArr: IMyCardProps[]
+}
+
+/**
+ * 文章列表
+ */
+export interface IArticleListProps {
+  articleList: IMyCardProps[]
 }

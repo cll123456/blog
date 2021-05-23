@@ -1,0 +1,129 @@
+@import './../../../assets/style/common.less';
+
+.myCard-container {
+  width: 100%;
+  background: var(--main-comp-bg-color);
+  box-shadow: 0 10px 15px rgb(31 45 61 / 10%), inset 0 0 0 1px hsl(0deg 0% 100% / 6%);
+  border: 4px solid var(--header-bg-hover-color);
+  border-radius: 10px;
+  padding: 0 8px 8px;
+  perspective: 650px;
+  position: relative;
+  z-index: 0;
+  box-sizing: border-box;
+  transition: all .25s;
+  height: 234px;
+  cursor: url(./../../../assets/imgs/cursor/hand-link.cur), auto;
+
+  h4 {
+    margin-bottom: 0;
+    height: 50px;
+    width: 100%;
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    font-size: 1.2em;
+
+    span {
+      display: inline-block;
+      .txt-more-dot(2);
+    }
+
+    &::before {
+      content: '';
+      width: 3px;
+      height: 100%;
+      left: -8px;
+      top: 4px;
+      position: absolute;
+      border-radius: 3px;
+      background-color: @primary-color;
+    }
+
+  }
+
+  .img-container {
+    position: absolute;
+    bottom: 4px;
+    left: 0px;
+    right: 0px;
+    width: 94%;
+    margin: 0 auto;
+
+
+    img {
+      width: 100%;
+      height: 160px;
+      -o-object-fit: cover;
+      object-fit: cover;
+      transition: .35s;
+      border-radius: 6px;
+    }
+  }
+
+  .hidden-content {
+    position: absolute;
+    bottom: 5px;
+    opacity: 0;
+    transition: .35s linear;
+    left: 15px;
+    right: 15px;
+    text-align: center;
+    transform: scale(.9);
+
+    .date,
+    .operator {
+      margin-bottom: 5px;
+    }
+
+    .operator {
+      span {
+        vertical-align: baseline;
+        font-size: 1em;
+
+        &:nth-of-type(2),&:nth-of-type(3) {
+          margin-left: 15px;
+        }
+
+        &.anticon-read,
+        address.anticon-read {
+          color: @success-color;
+        }
+
+        &.anticon-like,
+        address.anticon-like {
+          color: @error-color;
+        }
+
+        &.anticon-message,
+        address.anticon-message {
+          color: @info-color;
+        }
+
+        address {
+          margin-bottom: 0;
+          font-size: 1em;
+          margin-left: 2px;
+          display: inline;
+        }
+      }
+    }
+  }
+
+  &:hover {
+    .hidden-content {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    img {
+      transform-origin: top;
+      transform: translateY(-51px) rotateX(47deg);
+      backdrop-filter: opacity(60%);
+
+    }
+
+  }
+
+}

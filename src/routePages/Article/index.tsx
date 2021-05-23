@@ -3,6 +3,8 @@ import Carousel from '../../components/core/Carousel'
 import { IArticleState } from '../../types/page/article'
 import './index.less'
 import { Divider } from 'antd';
+import MyCard from '../../components/core/MyCard';
+import ArticleList from './ArticleList';
 
 export default class Article extends PureComponent<{}, IArticleState> {
   state: IArticleState = {
@@ -20,7 +22,64 @@ export default class Article extends PureComponent<{}, IArticleState> {
         imgUrl: 'https://file.blog.xgblack.cn/wp-content/uploads/2020/02/3f12e7af3a6d99f54ad316fca80ff32e.jpg',
       },
     ],
-    curIndex: 0
+    curIndex: 0,
+    // 文章列表
+    articleArr: [
+      {
+        title: 'java爬虫练习|爬取京东上的手机商品数据',
+        imgUrl: 'https://file.blog.xgblack.cn/wp-content/uploads/2020/01/1a2de4413ec1dd60ba8cc08c27ea0926.jpg',
+        date: '2020年2月15日',
+        reading: 3093,
+        like: '100',
+        msg: 8,
+        id: 2
+      },
+      {
+        title: 'vue迁都xxx',
+        imgUrl: 'https://file.blog.xgblack.cn/wp-content/uploads/2020/01/1a2de4413ec1dd60ba8cc08c27ea0926.jpg',
+        date: '2020年2月15日',
+        reading: 323,
+        like: '545',
+        msg: 2,
+        id: 1
+      },
+      {
+        title: 'dfsa十分士大夫|爬取京东上爬取京东上的手机商品数据爬取京东上的手机商品数据的手机商品数据',
+        imgUrl: 'https://file.blog.xgblack.cn/wp-content/uploads/2020/01/1a2de4413ec1dd60ba8cc08c27ea0926.jpg',
+        date: '2020年2月15日',
+        reading: 3093,
+        like: '100',
+        msg: 8,
+        id: 4
+      },
+      {
+        title: 'dfsa十分士大夫',
+        imgUrl: 'https://file.blog.xgblack.cn/wp-content/uploads/2020/01/1a2de4413ec1dd60ba8cc08c27ea0926.jpg',
+        date: '2020年2月15日',
+        reading: 323,
+        like: '545',
+        msg: 2,
+        id: 5
+      },
+      {
+        title: 'dfsa十分士大夫',
+        imgUrl: 'https://file.blog.xgblack.cn/wp-content/uploads/2020/01/1a2de4413ec1dd60ba8cc08c27ea0926.jpg',
+        date: '2020年2月15日',
+        reading: 323,
+        like: '545',
+        msg: 2,
+        id: 6
+      },
+      {
+        title: 'dfsa十分士大夫',
+        imgUrl: 'https://file.blog.xgblack.cn/wp-content/uploads/2020/01/1a2de4413ec1dd60ba8cc08c27ea0926.jpg',
+        date: '2020年2月15日',
+        reading: 323,
+        like: '545',
+        msg: 2,
+        id: 7
+      }
+    ]
   }
   /**
    * li dom
@@ -79,11 +138,18 @@ export default class Article extends PureComponent<{}, IArticleState> {
     this.carouselContDom = document.getElementsByClassName('carousel-container')[0].getElementsByClassName('content')[0]
   }
 
+
   render() {
     return (
       <div className='article-container'>
+        {/* 文章轮播图 */}
         <Carousel timer={5000} data={this.state.carouselArr} curIndex={this.state.curIndex} onPre={this.onPre} onNext={this.onNext} />
+        {/* 全部文章 */}
         <Divider dashed orientation="left">全部文章</Divider>
+        {/* 全部文章列表 */}
+        <div className="article-list">
+          <ArticleList articleList={this.state.articleArr}></ArticleList>
+        </div>
       </div>
     )
   }

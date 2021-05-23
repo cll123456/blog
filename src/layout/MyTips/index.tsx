@@ -3,9 +3,9 @@ import { IMyTipsProps } from '../../types/layout/myTips';
 import './index.less';
 export default function MyTips(props: IMyTipsProps) {
   // gen dom https://img-blog.csdnimg.cn/20210413163532791.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64
-  const liDom = props.dataList?.map(p => {
+  const liDom = props.dataList?.map((p, i) => {
     return (
-      <li>
+      <li key={p.imgUrl + i}>
         <div className="img-title">
           <img src={p.imgUrl} alt={p.title} />
           <span>{p.title}</span>
