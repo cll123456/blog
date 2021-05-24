@@ -33,7 +33,7 @@ export const routes: RouteConfig[] = [
     path: "/Article",
     exact: true,
     name: '文章',
-    render: genParticlesRoute(Article),
+    component: withLazyComp(Article as any),
     meta: {
       icon: <ContainerOutlined />
     }
@@ -42,7 +42,7 @@ export const routes: RouteConfig[] = [
     path: "/Project",
     exact: true,
     name: '项目',
-    render: genParticlesRoute(Project),
+    render: withLazyComp(Project),
     meta: {
       icon: <FundProjectionScreenOutlined />
     }
@@ -52,7 +52,7 @@ export const routes: RouteConfig[] = [
     path: "/Gauge",
     exact: true,
     name: '归档',
-    render: genParticlesRoute(Gauge),
+    render: withLazyComp(Gauge),
     meta: {
       icon: <InsertRowAboveOutlined />
     }
@@ -61,7 +61,7 @@ export const routes: RouteConfig[] = [
     path: "/Hot",
     exact: true,
     name: '热门',
-    render: genParticlesRoute(Hot),
+    render: withLazyComp(Hot),
     meta: {
       icon: <FireOutlined />
     }
@@ -70,7 +70,7 @@ export const routes: RouteConfig[] = [
     path: "/About",
     exact: true,
     name: '我的简历',
-    render: genParticlesRoute(About),
+    render: withLazyComp(About),
     meta: {
       icon: <UserOutlined />
     }

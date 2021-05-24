@@ -8,13 +8,10 @@ import withLazyComp from "../components/hoc/withLazyComp";
  * @returns 
  */
 export function genParticlesRoute(Comp: React.LazyExoticComponent<() => JSX.Element>) {
-  const _MyParticles = lazy(() => import('../components/common/particles/MyParticles'))
-  const MyParticles = withLazyComp(_MyParticles)
   const Temp = withLazyComp(Comp)
   return () => (
     <>
       <Temp />
-      <MyParticles />
     </>
   )
 

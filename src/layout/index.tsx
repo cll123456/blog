@@ -14,6 +14,7 @@ import lighter from './../assets/style/index.less'
 import MyTips from './MyTips'
 import { tipObj } from '../types/layout/myTips'
 import Footer from './Footer'
+import MyParticles from '../components/common/particles/MyParticles'
 
 export default function Layout() {
   // 刷新组件
@@ -115,6 +116,7 @@ function composeBody(handleSkin: (checked: boolean) => void) {
         </div>
         {/* 尾巴 */}
         <Footer key={'footer'}></Footer>
+        <MyParticles key={'MyParticles'} />
       </div>
     )
   } else {
@@ -135,6 +137,7 @@ function composeBody(handleSkin: (checked: boolean) => void) {
         </div>
         {/* 尾巴 */}
         <div key={'footer'}></div>
+        <div key={'MyParticles'}></div>
       </div>
     )
   }

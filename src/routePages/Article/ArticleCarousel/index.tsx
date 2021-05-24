@@ -1,17 +1,19 @@
 import { Button, Tooltip } from 'antd';
 import { DownOutlined, UpOutlined, BookOutlined, FolderOutlined } from '@ant-design/icons';
-import React from 'react'
-import { ICarouselData, ICarouselProps } from '../../../types/layout/carousel'
+import React, { useEffect } from 'react'
 import './index.less'
+import { IArticleCarouselProps, ICarouselData } from '../../../types/page/article';
 // 定时器
 let carouselTimer: (number | null) = null;
 
-export default function Carousel(props: ICarouselProps) {
+export default function ArticleCarousel(props: IArticleCarouselProps) {
 
   // 启动一个计时器
   const handleTimer = () => {
     cancelTimer();
     carouselTimer = window.setInterval(() => {
+      // console.log(carousel);
+      
       props.onNext(props.curIndex + 1)
     }, props.timer)
   }
@@ -23,7 +25,13 @@ export default function Carousel(props: ICarouselProps) {
     }
   }
 
-  // 启动定时器
+  useEffect(() => {
+    // 启动一个定时器
+    // 
+    // 返回定时器清理函数
+    return cancelTimer;
+  }, [])
+  // 启动一个定时器
   handleTimer();
 
   // generate dom

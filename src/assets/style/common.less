@@ -43,6 +43,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
 /**文字超出多行行打点**/
 .txt-more-dot(@num: 2) {
     overflow: hidden;
@@ -50,4 +51,47 @@
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: @num;
+}
+
+/**打开主页面的公共样式**/
+.main-header-common-bg-style() {
+    width: 100%;
+    height: 330px;
+    position: relative;
+    cursor: url(./../imgs/cursor/hand-link.cur), auto;
+
+    .bg-img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: 50%;
+        transition: all 1s;
+        filter: opacity(50%) saturate(150%) sepia(90%);
+    }
+}
+
+/**图片公共样式**/
+.img-common-style() {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    border-radius: 6px;
+    box-shadow: 0 3px 6px rgb(31 45 61 / 30%);
+    transition: .3s;
+}
+
+/**公共轮播按钮样**/
+.carousel-btn-group() {
+    position: absolute;
+    width: 32px;
+    height: 96px;
+    display: flex;
+    flex-direction: column;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+    justify-content: space-between;
+    z-index: 10;
 }
