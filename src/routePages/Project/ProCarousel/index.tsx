@@ -42,6 +42,9 @@ export default function ProCarousel(props: IProCarouselProps) {
         <div className="detail">
           这是一个xxx的游戏，使用新休息技术栈这是一个xxx的游戏，使用新休息技术栈这是一个xxx的游戏，使用新休息技术栈这是一个xxx的游戏，使用新休息技术栈这是一个xxx的游戏，使用新休息技术栈这是一个xxx的游戏，使用新休息技术栈这是一个xxx的游戏，使用新休息技术栈这是一个xxx的游戏，使用新休息技术栈
         </div>
+        <div className="btn">
+          <Button type="dashed" shape="round" > 项目预览 {`>`} </Button>
+        </div>
       </div>
       <div className="img-container">
         <ul>

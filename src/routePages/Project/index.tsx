@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react'
 import ProCarousel from './ProCarousel'
-
+import './index.less';
+import { Divider } from 'antd';
 
 export default function Project() {
   // 轮播图的lidom
@@ -15,8 +16,6 @@ export default function Project() {
     setDescContDom(document.getElementsByClassName('pro-carousel-container')[0].getElementsByClassName('desc-container')[0])
   }, [liDom, descContDom])
  
-  
-
   // 处理轮播
   const [proCarouselObj, setProCarouselObj] = useState({
     data: [{
@@ -85,7 +84,10 @@ export default function Project() {
 
   return (
     <div className='project-container'>
+      {/* 轮播图 */}
       <ProCarousel {...proCarouselObj} onPre={handlePre} onNext={handleNext}></ProCarousel>
+        {/* 全部文章 */}
+        <Divider dashed orientation="left">全部项目</Divider>
     </div>
   )
 }

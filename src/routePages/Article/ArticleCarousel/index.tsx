@@ -25,9 +25,7 @@ export default function ArticleCarousel(props: IArticleCarouselProps) {
     }
   }
 
-  useEffect(() => {
-    // 启动一个定时器
-    // 
+  useEffect(() => { 
     // 返回定时器清理函数
     return cancelTimer;
   }, [])
