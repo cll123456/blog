@@ -30,3 +30,27 @@ export interface ProCarouselObj {
    */
   imgUrl: string,
 }
+/**
+ * 项目卡片属性
+ */
+export interface IProCardProps {
+  /**
+   * 图片地址
+   */
+   imgUrl: string,
+   /**
+    * 标题
+    */
+   title: string,
+   /**
+    * 描述
+    */
+   desc: string,
+}
+
+/**
+ * 卡片list
+ */
+export interface IProCardListProps {
+  cardList: IProCardProps[]
+}

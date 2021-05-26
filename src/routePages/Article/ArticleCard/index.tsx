@@ -5,9 +5,9 @@ import { ReadOutlined, LikeOutlined, MessageOutlined } from '@ant-design/icons';
 import { IMyCardProps } from '../../../types/components/myCard';
 
 
-export default function MyCard(props: IMyCardProps) {
+export default function ArticleCard(props: IMyCardProps) {
   return (
-    <div className='myCard-container'>
+    <div className='articleCard-container'>
       <h4>
         <span>{props.title}</span>
       </h4>

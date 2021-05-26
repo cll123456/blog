@@ -101,7 +101,22 @@
         .ant-btn-round {
           transition: all .5s;
           padding: 4px 25px;
-          cursor: url(./../imgs/cursor/hand-link.cur), auto;
+          .cursor-pointer();
         }
       }
 }
+
+/**鼠标手型**/
+.cursor-pointer(){
+    cursor: url(./../imgs/cursor/hand-link.cur), auto;
+}
+
+/**分页组件样式**/
+.page-container(){
+    width: 100%;
+    text-align: center;
+
+    li,.ant-pagination-item-link{
+      border-radius: 50%;
+    }
+  }

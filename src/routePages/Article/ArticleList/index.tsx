@@ -1,5 +1,5 @@
 import React from 'react'
-import MyCard from '../../../components/core/MyCard'
+import ArticleCard from '../ArticleCard'
 import { IArticleListProps } from '../../../types/page/article'
 import './index.less'
 
@@ -7,7 +7,7 @@ export default function ArticleList(props: IArticleListProps) {
 
   const dom = props.articleList.map(p => {
     return (
-      <MyCard {...p} key={p.id}></MyCard>
+      <ArticleCard {...p} key={p.id}></ArticleCard>
     )
   })
   return (
