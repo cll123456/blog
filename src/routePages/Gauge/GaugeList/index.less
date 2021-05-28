@@ -1,0 +1,76 @@
+@import url('./../../../assets/style/common.less');
+
+.gaugeList-container {
+  width: 100%;
+  padding: 30px 100px;
+
+  ul,
+  li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  ul {
+    border-left: 2px solid multiply(@body-background, @primary-color);
+    padding: 0 20px;
+    position: relative;
+
+    .circle {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      position: absolute;
+      background-color: @success-color;
+
+      &.mainCircle {
+        width: 15px;
+        height: 15px;
+        background-color: @error-color;
+        left: -8.5px;
+        top: -10px;
+      }
+    }
+
+
+    .allTitle {
+      font-size: 2em;
+      .m-b-5();
+    }
+
+    li {
+      position: relative;
+
+      .circle {
+        left: -26px;
+        top: 10px;
+      }
+
+      .content {
+        .m-b-5();
+
+        .title {
+          .cursor-pointer();
+          .txt-one-dot();
+
+          .ant-divider-horizontal {
+            margin-bottom: 20px;
+          }
+
+          div.ant-typography {
+            margin-bottom: 0;
+
+            &:hover {
+              transition: all .35s;
+              color: fade(multiply(transparent, @primary-color), 80%)
+            }
+          }
+
+          .ant-typography-copy {
+            .cursor-pointer();
+          }
+        }
+      }
+    }
+  }
+}

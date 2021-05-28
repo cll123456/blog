@@ -89,7 +89,7 @@ export default function Project() {
     desc: '项目描述信息，最多三行ds'
   },
   {
-    imgUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+    imgUrl: 'https://zos.alipayobjects.com/rms4portal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
     title: '项目名称2',
     desc: '项目描述信息，最多三行ds'
   },
