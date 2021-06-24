@@ -57,15 +57,15 @@ export const routes: RouteConfig[] = [
       icon: <InsertRowAboveOutlined />
     }
   },
-  {
-    path: "/Hot",
-    exact: true,
-    name: '热门',
-    render: withLazyComp(Hot),
-    meta: {
-      icon: <FireOutlined />
-    }
-  },
+  // {
+  //   path: "/Hot",
+  //   exact: true,
+  //   name: '热门',
+  //   render: withLazyComp(Hot),
+  //   meta: {
+  //     icon: <FireOutlined />
+  //   }
+  // },
   {
     path: "/About",
     exact: true,

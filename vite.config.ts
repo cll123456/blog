@@ -28,8 +28,8 @@ export default defineConfig({
     port: 3005,//启动端口
     proxy: {
       // 第一个代理
-      '/api/mobile': { // 匹配到啥来进行方向代理
-        target: 'https://github.com/cll123456/vue3-ts-mobile', // 代理的目标
+      '/api/': { // 匹配到啥来进行方向代理
+        target: 'https://localhost:5001', // 代理的目标
         rewrite: (path) => path.replace(/^\/api/, '') // 如果不需要api 直接把路径上的api 替换成空，这个
       }
     },
