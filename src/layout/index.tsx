@@ -12,7 +12,6 @@ import './index.less'
 import dark from './../assets/style/index.dark.less'
 import lighter from './../assets/style/index.less'
 import MyTips from './MyTips'
-import { tipObj } from '../types/layout/myTips'
 import Footer from './Footer'
 import MyParticles from '../components/common/particles/MyParticles'
 
@@ -23,11 +22,11 @@ export default function Layout() {
   // 改变皮肤的方法
   const handleSkin = (checked: boolean) => {
     // 修改canvas背景颜色
-    store.dispatch(changeBgColor(checked ? EbgColor.Sun : EbgColor.Moon));
+    store.dispatch(changeBgColor(checked ? EbgColor.Sun : EbgColor.Moon) as never);
     // 改变头部背景颜色
-    store.dispatch(changeHeaderBgColor(checked ? EHeaderBgColor.Sun : EHeaderBgColor.Moon));
+    store.dispatch(changeHeaderBgColor(checked ? EHeaderBgColor.Sun : EHeaderBgColor.Moon) as never);
     // 改变组件以及其他背景颜色
-    store.dispatch(changeMainCompBgColor(checked ? EMainBodyCompBgColor.Sun : EMainBodyCompBgColor.Moon));
+    store.dispatch(changeMainCompBgColor(checked ? EMainBodyCompBgColor.Sun : EMainBodyCompBgColor.Moon) as never);
 
     if (checked) {
       // 明亮主题
@@ -58,38 +57,6 @@ export default function Layout() {
  * @returns 
  */
 function composeBody(handleSkin: (checked: boolean) => void) {
-  const data: tipObj[] = [
-    {
-      imgUrl: 'https://img-blog.csdnimg.cn/20210413163532791.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64',
-      title: 'React',
-      num: 10
-    },
-    {
-      imgUrl: 'https://img-blog.csdnimg.cn/20210413163903826.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64',
-      title: 'Vue',
-      num: 40
-    },
-    {
-      imgUrl: 'https://img-blog.csdnimg.cn/20210413163532791.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64',
-      title: 'React',
-      num: 10
-    },
-    {
-      imgUrl: 'https://img-blog.csdnimg.cn/20210413163903826.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64',
-      title: 'Vue',
-      num: 40
-    },
-    {
-      imgUrl: 'https://img-blog.csdnimg.cn/20210413163532791.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64',
-      title: 'React',
-      num: 10
-    },
-    {
-      imgUrl: 'https://img-blog.csdnimg.cn/20210413163903826.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64',
-      title: 'Vue',
-      num: 40
-    },
-  ]
   // 获取当前的路径
   const pathname = window.location.pathname
   // 判断当前的路径是否在网站主体页面
@@ -107,7 +74,7 @@ function composeBody(handleSkin: (checked: boolean) => void) {
           <div key={'myMenu'} className='left-container'>
             <MyMenu></MyMenu>
             {/* 标签 */}
-            <MyTips dataList={data}></MyTips>
+            <MyTips></MyTips>
           </div>
           {/* 主体内容路由区域 */}
           <div key={'routes'} className='body-container'>

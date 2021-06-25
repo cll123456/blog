@@ -1,12 +1,11 @@
-import { call, put, take, takeEvery } from "@redux-saga/core/effects";
+import { call, put, takeEvery } from "@redux-saga/core/effects";
 import { apiGetAboutMe } from "../../../api/about";
 import { IAboutListRes } from "../../../types/store/action/about";
 import { getAsyncData, setData, setIsLoading } from "../../actions/about";
 export default function* () {
-  console.log('进入saga', getAsyncData.toString());
   // 监听获取异步关于我的数据
   yield takeEvery(getAsyncData.toString(), getAboutMeData);
-  
+
 }
 
 /**

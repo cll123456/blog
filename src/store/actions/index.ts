@@ -12,5 +12,4 @@ for (const path in modules) {
   }
 }
 
-
 export default combineReducers(obj)

@@ -2,7 +2,7 @@
 
 .header-container {
   position: fixed;
-  height: 50px;                     
+  height: 50px;
   transform-origin: top;
   left: 0;
   right: 0;
@@ -19,27 +19,33 @@
     .header-img {
       width: 250px;
       text-align: center;
-      img{
+
+      img {
         height: 50px;
         width: auto;
         border-radius: 25px;
       }
     }
 
-    .header-changeSkin{
+    .header-changeSkin {
       width: 100px;
       display: flex;
       justify-content: center;
+
+      .ant-switch {
+        .cursor-pointer();
+      }
     }
 
-    .header-search{
+    .header-search {
       width: calc(100% - 350px);
     }
-    
+
   }
 
   background: var(--header-bg-hover-color);
   z-index: 1000;
-  cursor: url('./../../assets/imgs/cursor/hand-link.cur'), pointer;
+  cursor: url('./../../assets/imgs/cursor/hand-link.cur'),
+  pointer;
 
 }

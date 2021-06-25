@@ -36,7 +36,7 @@ export default function MyMenu() {
   )
 
   return (
-    <div>
+    <div className='myMenu-container'>
       <Menu
         style={{ width: 256 }}
         mode="inline"
