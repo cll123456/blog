@@ -69,7 +69,7 @@ export const routes: RouteConfig[] = [
   {
     path: "/About",
     exact: true,
-    name: '我的简历',
+    name: '关于我',
     render: withLazyComp(About),
     meta: {
       icon: <UserOutlined />

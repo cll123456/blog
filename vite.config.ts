@@ -29,7 +29,7 @@ export default defineConfig({
     proxy: {
       // 第一个代理
       '/api/': { // 匹配到啥来进行方向代理
-        target: 'https://localhost:5001', // 代理的目标
+        target: 'http://localhost:5001', // 代理的目标
         rewrite: (path) => path.replace(/^\/api/, '') // 如果不需要api 直接把路径上的api 替换成空，这个
       }
     },
