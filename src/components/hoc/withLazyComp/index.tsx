@@ -10,7 +10,7 @@ export default function withLazyComp(Comp: ComponentType) {
     return (
       <>
         <React.Suspense fallback={<Loading />}>
-        {/* <Loading /> */}
+          {/* <Loading /> */}
           <Comp />
         </React.Suspense>
       </>
