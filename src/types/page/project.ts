@@ -46,4 +46,6 @@ export interface IProjectProps extends IProjectStore {
   getTotalProjectData: () => void
   // 改变页面数
   onChangePage(page:Number): void
+  // 设置条件
+  setTotalCondition(condition:object): void
 }

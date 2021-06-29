@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Dispatch, useLayoutEffect } from 'react'
 import { Unsubscribe } from 'redux-saga';
 import { apiGetAboutMe } from '../../api/about';
 import store from '../../store';
@@ -8,13 +8,14 @@ import { IStore } from '../../types/store/action';
 import { IAboutStore } from '../../types/store/action/about';
 import { Skeleton, Card, Tag } from 'antd';
 import './index.less'
+import { connect } from 'react-redux'
 
 /**
  * 获取标签
  * @param str 
  * @returns 
  */
-function getTags(str:string|undefined){
+function getTags(str: string | undefined) {
   const colors = ['success', 'processing', 'error', 'warning', 'default'];
   return str && str.split(',').map(p => {
     return (
@@ -27,9 +28,14 @@ function getTags(str:string|undefined){
  * @param props 
  * @returns 
  */
-function About(props: IAboutStore) {
+function About(props: IAboutStore & { getAboutData: () => void }) {
   const { loading } = props;
- 
+
+  useLayoutEffect(() => {
+    if (Object.keys(props.dataObj).length === 0) {
+      props.getAboutData();
+    }
+  }, [])
   return (
     <div className='about-container'>
       {/* 个人基本信息 */}
@@ -170,45 +176,54 @@ const mapStateToProps = (state: IStore) => {
   return state.about
 }
 
-
+const mapDispatchToProps = (dispatch: Dispatch<any>) => {
+  return {
+    // 获取关于我的数据
+    getAboutData() {
+      dispatch(getAsyncData())
+    }
+  }
+}
 
 /**
  * 关于我的容器组件
  */
-export default class extends React.PureComponent<any, IAboutStore> {
-  // 初始化state
-  state = mapStateToProps(store.getState() as any)
-  // 取消监听store的事件
-  onCancelListener!: Unsubscribe
-  // 获取初始化数据
-  async componentDidMount() {
-    // 需要先设定监听
-    this.onCancelListener = store.subscribe(() => {
-      this.setState(mapStateToProps(store.getState() as any))
-    })
-    // 判断数据是否存在，不存在则发送请求获取数据
-    if (Object.keys(this.state.dataObj).length === 0) {
-      store.dispatch(setIsLoading(true) as never)
-      try {
-        // 获取数据
-        const res: IAboutProp = await apiGetAboutMe().then(res => res.data);
-        store.dispatch(setData(res) as never)
-      } catch (err) {
-        store.dispatch(setData({}) as never)
-      } finally {
-        store.dispatch(setIsLoading(false) as never)
-      }
-    }
-  }
-  // 组件卸载
-  componentWillUnmount() {
-    // 取消监听
-    this.onCancelListener();
-  }
+// export default class extends React.PureComponent<any, IAboutStore> {
+//   // 初始化state
+//   state = mapStateToProps(store.getState() as any)
+//   // 取消监听store的事件
+//   onCancelListener!: Unsubscribe
+//   // 获取初始化数据
+//   async componentDidMount() {
+//     // 需要先设定监听
+//     this.onCancelListener = store.subscribe(() => {
+//       this.setState(mapStateToProps(store.getState() as any))
+//     })
+//     // 判断数据是否存在，不存在则发送请求获取数据
+//     if (Object.keys(this.state.dataObj).length === 0) {
+//       store.dispatch(setIsLoading(true) as never)
+//       try {
+//         // 获取数据
+//         const res: IAboutProp = await apiGetAboutMe().then(res => res.data);
+//         store.dispatch(setData(res) as never)
+//       } catch (err) {
+//         store.dispatch(setData({}) as never)
+//       } finally {
+//         store.dispatch(setIsLoading(false) as never)
+//       }
+//     }
+//   }
+//   // 组件卸载
+//   componentWillUnmount() {
+//     // 取消监听
+//     this.onCancelListener();
+//   }
 
-  render() {
-    return (
-      <About {...this.state}></About>
-    )
-  }
-}
+//   render() {
+//     return (
+//       <About {...this.state}></About>
+//     )
+//   }
+// }
+
+export default connect(mapStateToProps, mapDispatchToProps)(About)
