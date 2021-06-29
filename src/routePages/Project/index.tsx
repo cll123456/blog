@@ -1,14 +1,32 @@
-import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react'
+import React, { Dispatch, useEffect, useState } from 'react'
 import ProCarousel from './ProCarousel'
 import './index.less';
 import { Divider, Pagination } from 'antd';
-import ProCard from './ProCard';
 import ProCardList from './ProCardList';
-import { IProCardListProps, IProCardProps } from '../../types/page/project';
+import { IProjectProps } from '../../types/page/project';
+import { getHotProjectData, getTotalProjectData, setTotalProjectCondition } from '../../store/actions/project';
+import { IProjectStore } from '../../types/store/action/project';
+import { connect } from 'react-redux';
+import store from '../../store';
+import { Skeleton } from 'antd';
 
-export default function Project() {
+
+function Project(prop: IProjectProps) {
+
+  // 获取store的数据
+  const state = store.getState().project as IProjectStore;
+
+  // 处理轮播
+  const [proCarouselObj, setProCarouselObj] = useState({
+    timer: 5000,
+    curIndex: 0,
+  });
+
+  const hotProjectData = state.hotProjectData;
   // 轮播图的lidom
   const [liDom, setLiDom] = useState<HTMLCollectionOf<HTMLLIElement>>();
+
+  const cardList = state.totalProjectData;
   // 轮播图内容dom
   const [descContDom, setDescContDom] = useState<Element>()
   // 获取轮播图的dom
@@ -17,35 +35,24 @@ export default function Project() {
     setLiDom(document.getElementsByClassName('img-container')[0].getElementsByTagName('ul')[0].getElementsByTagName('li'))
     // 获取描述的dom
     setDescContDom(document.getElementsByClassName('pro-carousel-container')[0].getElementsByClassName('desc-container')[0])
-  }, [liDom, descContDom])
+    if (hotProjectData.length === 0) {
+      // 获取热门项目
+      prop.getHotProjectData();
+    }
+    if (cardList.length === 0) {
+      // 获取全部项目
+      prop.getTotalProjectData();
+    }
 
-  // 处理轮播
-  const [proCarouselObj, setProCarouselObj] = useState({
-    data: [{
-      imgUrl: 'https://file.blog.xgblack.cn/wp-content/uploads/2020/07/DSC00208-2.jpg',
-    },
-    {
-      imgUrl: 'https://file.blog.xgblack.cn/wp-content/uploads/2020/04/IMG_20200403_172936.jpg',
-    },
-    {
-      imgUrl: 'https://file.blog.xgblack.cn/wp-content/uploads/2020/06/IMG_20200613_000004.jpg',
-    },
-    {
-      imgUrl: 'https://file.blog.xgblack.cn/wp-content/uploads/2020/01/5675b08eebbf679e9c0d1c023a2db549.jpg',
-    },
-    {
-      imgUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    }],
-    timer: 5000,
-    curIndex: 0,
-  });
+  }, [liDom, descContDom]);
+
 
 
   /**
    * 上一张图片
    */
   const handlePre = (nextIndex: number) => {
-    let n = nextIndex < 0 ? proCarouselObj.data.length - 1 : nextIndex;
+    let n = nextIndex < 0 ? hotProjectData.length - 1 : nextIndex;
     liDom![n].className = 'showPre';
     addDescContAnimation();
     setProCarouselObj((obj: any) => {
@@ -61,7 +68,7 @@ export default function Project() {
    * 下一张图片
    */
   const handleNext = (nextIndex: number) => {
-    let n = nextIndex > proCarouselObj.data.length - 1 ? 0 : nextIndex;
+    let n = nextIndex > hotProjectData.length - 1 ? 0 : nextIndex;
     liDom![n].className = 'showNext';
     addDescContAnimation();
     setProCarouselObj((obj: any) => {
@@ -83,46 +90,49 @@ export default function Project() {
     }, 0)
   }
 
-  const cardList: IProCardProps[] = [{
-    imgUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    title: '项目名称1',
-    desc: '项目描述信息，最多三行ds'
-  },
-  {
-    imgUrl: 'https://zos.alipayobjects.com/rms4portal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    title: '项目名称2',
-    desc: '项目描述信息，最多三行ds'
-  },
-  {
-    imgUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    title: '项目名称3',
-    desc: '项目描述信息，最多三行ddd'
-  },{
-    imgUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    title: '项目名称4',
-    desc: '项目描述信息，最多三行sd'
-  },
-  {
-    imgUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    title: '项目名称5',
-    desc: '项目描述信息，最多三行3443'
-  }
-]
-
-
   return (
     <div className='project-container'>
-      {/* 轮播图 */}
-      <ProCarousel {...proCarouselObj} onPre={handlePre} onNext={handleNext}></ProCarousel>
-      {/* 全部文章 */}
-      <Divider dashed orientation="left">全部项目</Divider>
-      {/* 文章列表 */}
-      <ProCardList cardList={cardList}></ProCardList>
-      {/* 分页 */}
-      {/* 分页 */}
-      <div className="page-container">
-          <Pagination defaultCurrent={1} total={50} />
+      <Skeleton loading={prop.totalProjectLoading}>
+        {/* 轮播图 */}
+        <ProCarousel {...proCarouselObj} data={hotProjectData} onPre={handlePre} onNext={handleNext}></ProCarousel>
+        {/* 全部文章 */}
+        <Divider dashed orientation="left">全部项目</Divider>
+        {/* 文章列表 */}
+
+        <ProCardList cardList={cardList}></ProCardList>
+        {/* 分页 */}
+        <div className="page-container">
+          <Pagination 
+          hideOnSinglePage={true} 
+          current={Number(state.totalProjectCondition.pageNo) || 1} 
+          pageSize={Number(state.totalProjectCondition.pageSize) || 6}
+          total={state.count} 
+          onChange={prop.onChangePage}
+          />
         </div>
+      </Skeleton>
     </div>
   )
 }
+
+
+const mapStateToProps = (store: IProjectStore) => ({
+  ...store
+})
+
+const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
+  // 获取热门项目
+  getHotProjectData() {
+    dispatch(getHotProjectData() as never);
+  },
+  // 获取全部项目
+  getTotalProjectData() {
+    dispatch(getTotalProjectData() as never);
+  },
+  // 改变页面数
+  onChangePage(page:Number){
+    dispatch(setTotalProjectCondition({pageNo: page}));
+  }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Project);

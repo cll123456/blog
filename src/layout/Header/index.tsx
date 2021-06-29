@@ -13,6 +13,7 @@ export default function Header(props: ILayoutHeader, ref: Ref<IHeaderRef>) {
   const [check, setCheck] = useState(true);
   // 获取状态
   const state:IStore = useStore().getState();
+  
   document.body.style.setProperty('--header-bg-hover-color', state.header.headerBgColor);
   document.body.style.setProperty('--main-comp-bg-color', state.header.bodyCompBgColor);
   

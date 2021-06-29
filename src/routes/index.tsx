@@ -43,16 +43,18 @@ export const routes: RouteConfig[] = [
     exact: true,
     name: '项目',
     render: withLazyComp(Project),
+    sensitive: false,
     meta: {
       icon: <FundProjectionScreenOutlined />
     }
-  },
+  },    
   
   {
     path: "/Gauge",
     exact: true,
     name: '归档',
     render: withLazyComp(Gauge),
+    sensitive: false,
     meta: {
       icon: <InsertRowAboveOutlined />
     }

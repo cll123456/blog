@@ -15,11 +15,11 @@ export default function Img(props: IImagProps<any>) {
     if (isFlag) return;
     // 创建一个img标签
     const imgDom = new Image();
-    imgDom.src = props.src;
+    imgDom.src = props.src || errorImg;
     // 图片加载完成使用正常的图片
     imgDom.onload = function () {
       setIsFlag(true)
-      setSrc(props.src)
+      setSrc(props.src || errorImg)
     }
     // 图片加载失败使用图片占位符
     imgDom.onerror = function () {

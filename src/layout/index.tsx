@@ -3,7 +3,8 @@ import { Provider } from 'react-redux'
 import { renderRoutes } from 'react-router-config'
 import { BrowserRouter } from 'react-router-dom'
 import { routes } from '../routes'
-import store from '../store'
+import store, { history } from '../store'
+import { ConnectedRouter } from 'connected-react-router'
 import { changeBgColor, changeHeaderBgColor, changeMainCompBgColor } from '../store/actions/header'
 import { EbgColor, EHeaderBgColor, EMainBodyCompBgColor } from '../types/store/action/header'
 import Header from './Header'
@@ -14,6 +15,7 @@ import lighter from './../assets/style/index.less'
 import MyTips from './MyTips'
 import Footer from './Footer'
 import MyParticles from '../components/common/particles/MyParticles'
+
 
 export default function Layout() {
   // 刷新组件
@@ -44,7 +46,9 @@ export default function Layout() {
     <>
       <BrowserRouter>
         <Provider store={store}>
-          {body}
+          <ConnectedRouter history={history}>
+            {body}
+          </ConnectedRouter>
         </Provider>
       </BrowserRouter >
     </>

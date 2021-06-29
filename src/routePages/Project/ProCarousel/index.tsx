@@ -27,7 +27,7 @@ export default function ProCarousel(props: IProCarouselProps) {
   // gen dom
   const dom = props.data.map((p, i) => {
     return (
-      <li key={p.imgUrl + i} className={`${i === 0 ? 'showPre' : ''}`}
+      <li key={p.imgUrl && p.imgUrl + i} className={`${i === 0 ? 'showPre' : ''}`}
         style={{
           backgroundImage: `url(${p.imgUrl})`
         }}>
@@ -36,14 +36,16 @@ export default function ProCarousel(props: IProCarouselProps) {
   })
   return (
     <div className='pro-carousel-container' onMouseLeave={genTimer} onMouseEnter={clearTimer}>
-      <div className="bg-img" style={{ backgroundImage: `url(${props.data[props.curIndex].imgUrl})` }}></div>
+      <div className="bg-img" style={{ backgroundImage: `url(${props.data[props.curIndex] && props.data[props.curIndex].imgUrl})` }}></div>
       <div className="desc-container show">
-        <h4>vue3实现图片数字华容道小游戏</h4>
+        <h4>{props.data[props.curIndex] && props.data[props.curIndex].title}</h4>
         <div className="detail">
-          这是一个xxx的游戏，使用新休息技术栈这是一个xxx的游戏，使用新休息技术栈这是一个xxx的游戏，使用新休息技术栈这是一个xxx的游戏，使用新休息技术栈这是一个xxx的游戏，使用新休息技术栈这是一个xxx的游戏，使用新休息技术栈这是一个xxx的游戏，使用新休息技术栈这是一个xxx的游戏，使用新休息技术栈
+          {props.data[props.curIndex] && props.data[props.curIndex].desc}
         </div>
         <div className="btn">
-          <Button type="dashed" shape="round" > 项目预览 {`>`} </Button>
+          <Button type="dashed" shape="round" onClick={() => {
+            window.open(props.data[props.curIndex].projectUrl || 'www.baidu.com', "_blank")
+          }}> 项目预览 {`>`} </Button>
         </div>
       </div>
       <div className="img-container">

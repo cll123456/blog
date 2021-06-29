@@ -9,7 +9,6 @@ import './index.less';
 import { Affix, Skeleton } from 'antd';
 import { useHistory } from 'react-router-dom';
 import * as H from 'history';
-
 /**
  * 标签云数组展示组件
  * @param props 
@@ -81,12 +80,14 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => {
  */
 
 export default class extends React.PureComponent<any, IMyTipStore>{
+  
   // 初始化state
   state = mapStateToProps(store.getState() as any);
   // 取消监听
   onCancelListener!: Unsubscribe
   // 组件挂载获取数据
   async componentDidMount() {
+    
     // 需要先写监听store变化的函数
     this.onCancelListener = store.subscribe(() => {
       this.setState(mapStateToProps(store.getState() as any))

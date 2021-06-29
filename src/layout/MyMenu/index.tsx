@@ -1,11 +1,12 @@
-import React, { useCallback } from 'react'
+import React, { Dispatch, useCallback } from 'react'
 import './index.less'
 import { Menu } from 'antd';
 import { routes } from '../../routes';
 import { useHistory, useLocation } from 'react-router';
+import { push } from 'connected-react-router'
+import { connect } from 'react-redux'
 
-
-export default function MyMenu() {
+function MyMenu(prop: { dispatchMenu: (path: string) => void }) {
   // 组装菜单
   const menuList = routes.map(p => {
     // 需要组转的路由，首屏不需要
@@ -19,17 +20,16 @@ export default function MyMenu() {
   })
   // 获取当前的路径名称
   const { pathname } = useLocation();
-  // 获取当前的路由history对象
-  const history = useHistory()
-
   // 点击跳转页面
   const handleGotoPage = useCallback(
     ({ item, key, keyPath }) => {
+     
+      
       // 回到首页
       if (key === '/Home') {
         window.location.href = '/';
       } else {
-        history.push(key)
+        prop.dispatchMenu(key);
       }
     },
     [],
@@ -48,3 +48,11 @@ export default function MyMenu() {
     </div>
   )
 }
+
+const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
+  dispatchMenu(path: string) {
+    dispatch(push(path));
+  }
+})
+
+export default connect(null, mapDispatchToProps)(MyMenu)

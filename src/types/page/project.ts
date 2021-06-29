@@ -1,3 +1,5 @@
+import { IProjectObj, IProjectStore } from "../store/action/project";
+
 /**
  * 项目轮播组件属性
  */
@@ -19,38 +21,29 @@ export interface IProCarouselProps {
     */
    timer: number,
 
-   data: ProCarouselObj[]
+   data: Partial<IProjectObj>[]
 }
-/**
- * 项目轮播的组件对象
- */
-export interface ProCarouselObj {
-  /**
-   * 图片地址
-   */
-  imgUrl: string,
-}
-/**
- * 项目卡片属性
- */
-export interface IProCardProps {
-  /**
-   * 图片地址
-   */
-   imgUrl: string,
-   /**
-    * 标题
-    */
-   title: string,
-   /**
-    * 描述
-    */
-   desc: string,
-}
+
+
 
 /**
  * 卡片list
  */
 export interface IProCardListProps {
-  cardList: IProCardProps[]
+  cardList: Partial<IProjectObj>[]
+}
+
+
+
+
+/**
+ * 项目属性
+ */
+export interface IProjectProps extends IProjectStore {
+  // 获取热门项目
+  getHotProjectData: () => void
+  // 获取全部项目
+  getTotalProjectData: () => void
+  // 改变页面数
+  onChangePage(page:Number): void
 }

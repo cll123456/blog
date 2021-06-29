@@ -2,7 +2,7 @@ import React from 'react'
 import { Unsubscribe } from 'redux-saga';
 import { apiGetAboutMe } from '../../api/about';
 import store from '../../store';
-import { setData, setIsLoading } from '../../store/actions/about';
+import { getAsyncData, setData, setIsLoading } from '../../store/actions/about';
 import { IAboutProp } from '../../types/page/about';
 import { IStore } from '../../types/store/action';
 import { IAboutStore } from '../../types/store/action/about';

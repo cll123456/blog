@@ -12,8 +12,6 @@ export default function* () {
  * 获取关于我的数据
  */
 function* getAboutMeData() {
-  console.log('调用获取数据');
-
   // 启动加载
   yield put(setIsLoading(true));
   // 发送axios请求
@@ -22,5 +20,4 @@ function* getAboutMeData() {
   yield put(setData(res.data));
   // 关闭加载
   yield put(setIsLoading(false))
-
 }

@@ -15,5 +15,5 @@ export interface IImagProps<T> extends ImgHTMLAttributes<T> {
  /**
   * 图片正常显示的地址
   */
-  src: string,
+  src: string | undefined,
 }

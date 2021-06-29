@@ -9,6 +9,7 @@
   "dependencies": {
     "antd": "^4.15.5",
     "axios": "^0.21.1",
+    "connected-react-router": "^6.9.1",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "react-redux": "^7.2.4",

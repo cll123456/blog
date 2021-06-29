@@ -4,9 +4,9 @@ import ProCard from '../ProCard'
 import './index.less'
 
 export default function ProCardList(props: IProCardListProps) {
-  const dom = props.cardList.map((p,i) => {
+  const dom = props.cardList.map((p, i) => {
     return (
-      <ProCard key={p.imgUrl + i} {...p}></ProCard>
+      <ProCard key={p.imgUrl && p.imgUrl + i} {...p}></ProCard>
     )
   })
   return (
