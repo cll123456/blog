@@ -4,9 +4,10 @@ import { Menu } from 'antd';
 import { routes } from '../../routes';
 import { useHistory, useLocation } from 'react-router';
 import { push } from 'connected-react-router'
-import { connect } from 'react-redux'
+import { connect, useStore } from 'react-redux'
+import { IStore } from '../../types/store/action';
 
-function MyMenu(prop: { dispatchMenu: (path: string) => void }) {
+function MyMenu(prop: { dispatchMenu: (path: string, store: IStore) => void }) {
   // 组装菜单
   const menuList = routes.map(p => {
     // 需要组转的路由，首屏不需要
@@ -20,16 +21,17 @@ function MyMenu(prop: { dispatchMenu: (path: string) => void }) {
   })
   // 获取当前的路径名称
   const { pathname } = useLocation();
+  // 获取仓库
+  const store: IStore = useStore().getState();
+
   // 点击跳转页面
   const handleGotoPage = useCallback(
     ({ item, key, keyPath }) => {
-     
-      
       // 回到首页
       if (key === '/Home') {
         window.location.href = '/';
       } else {
-        prop.dispatchMenu(key);
+        prop.dispatchMenu(key, store);
       }
     },
     [],
@@ -50,8 +52,14 @@ function MyMenu(prop: { dispatchMenu: (path: string) => void }) {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
-  dispatchMenu(path: string) {
-    dispatch(push(path));
+  dispatchMenu(path: string, store: IStore) {
+    // 如果当前是项目
+    if (path === '/Project') {
+      
+      dispatch(push(`${path}?pageNo=${store.project.totalProjectCondition.pageNo}&title=${store.project.totalProjectCondition.title}`))
+    } else {
+      dispatch(push(path));
+    }
   }
 })
 

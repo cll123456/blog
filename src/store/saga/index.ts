@@ -7,8 +7,6 @@ export default function* () {
   // 收集saga 目录下面的生成器函数,使用默认导入
   const arr: any = [];
   const modules = import.meta.globEager('./../saga/**/*.ts');
-  console.log(modules);
-
   for (const path in modules) {
     if (path !== './../saga/index.ts') {
       // 获取导入的结果

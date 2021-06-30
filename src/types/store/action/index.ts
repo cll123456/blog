@@ -10,5 +10,6 @@ export interface IStore {
   myTips: IMyTipStore,
   project: IProjectStore,
   router: CRR.RouterState,
-  gauge: IGaugeStore
+  gauge: IGaugeStore,
+  [key: string]: any
 }

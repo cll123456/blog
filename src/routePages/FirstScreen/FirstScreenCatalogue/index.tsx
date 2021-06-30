@@ -18,7 +18,7 @@ export default function FirstScreenCatalogue() {
       title: '文章'
     },
     {
-      path: '/Project',
+      path: '/Project?pageNo=1&title=',
       target: '_self',
       title: '项目'
     },

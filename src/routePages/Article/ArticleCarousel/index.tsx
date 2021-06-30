@@ -12,8 +12,6 @@ export default function ArticleCarousel(props: IArticleCarouselProps) {
   const handleTimer = () => {
     cancelTimer();
     carouselTimer = window.setInterval(() => {
-      // console.log(carousel);
-      
       props.onNext(props.curIndex + 1)
     }, props.timer)
   }
