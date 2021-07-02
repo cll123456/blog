@@ -3,11 +3,13 @@ import React from 'react'
 import './index.less';
 import { ReadOutlined, LikeOutlined, MessageOutlined } from '@ant-design/icons';
 import { IMyCardProps } from '../../../types/components/myCard';
+import { renderTime } from '../../../utils/dateUtil';
 
 
 export default function ArticleCard(props: IMyCardProps) {
+  
   return (
-    <div className='articleCard-container'>
+    <div className='articleCard-container' style={props.style}>
       <h4>
         <span>{props.title}</span>
       </h4>
@@ -16,17 +18,17 @@ export default function ArticleCard(props: IMyCardProps) {
       </div>
       <div className="hidden-content">
         <div className="date">
-          {props.date}
+          {props.createdAt && props.createdAt.length > 0 ? renderTime(props.createdAt as string) : ''}
         </div>
         <div className="operator">
           <Tooltip title="阅读量">
-            <ReadOutlined /><address className='anticon-read'>{props.reading}</address>
+            <ReadOutlined /><address className='anticon-read'>{props.readNum}</address>
           </Tooltip>
           <Tooltip title="点赞量">
-            <LikeOutlined /><address className='anticon-like'>{props.like}</address>
+            <LikeOutlined /><address className='anticon-like'>{props.likeNum}</address>
           </Tooltip>
           <Tooltip title="评论">
-            <MessageOutlined /><address className='anticon-message'>{props.msg}</address>
+            <MessageOutlined /><address className='anticon-message'>{props.comentNum}</address>
           </Tooltip>
         </div>
         <div className="btn">

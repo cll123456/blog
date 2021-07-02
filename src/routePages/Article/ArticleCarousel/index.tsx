@@ -43,11 +43,13 @@ export default function ArticleCarousel(props: IArticleCarouselProps) {
       </li>
     )
   })
+
+  const genCloud = props.data[props.curIndex] && props.data[props.curIndex].tagNames?.split(',').join(' / ')
   return (
     <div className='carousel-container' onMouseEnter={cancelTimer} onMouseLeave={handleTimer}>
       {/* 背景 */}
       <div className="bg-img" style={{
-        backgroundImage: `url(${props.data[props.curIndex].imgUrl})`
+        backgroundImage: `url(${props.data[props.curIndex] && props.data[props.curIndex].imgUrl})`
       }}></div>
       {/* 按钮 */}
       <div className="btn-group">
@@ -66,10 +68,10 @@ export default function ArticleCarousel(props: IArticleCarouselProps) {
       </div>
       {/* 标题 */}
       <div className="content show">
-        <div className="title">ArchLinux/Manjaro使用独显驱动造成的系统无法启动</div>
+        <div className="title">{props.data[props.curIndex] && props.data[props.curIndex].title}</div>
         <div className="label">
           <BookOutlined />
-          <span>Arch / Arch Linux / 问题汇总</span>
+          <span>{genCloud}</span>
         </div>
         <div className="btn">
           <Button type="dashed" shape="round" > 阅读全文 {`>`} </Button>

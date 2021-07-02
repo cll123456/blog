@@ -1,20 +1,37 @@
-.articleList-container{
+.articleList-container {
   width: 100%;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  .articleCard-container{
+
+  .articleCard-container {
     max-width: 24%;
     margin-bottom: 10px;
 
-    &:nth-last-of-type(1){
+    &:nth-last-of-type(1)  {
       margin-left: 1.33333%;
     }
   }
 
-  &::after{
+  &::after {
     display: flex;
     flex: 1 1 auto;
     content: '';
+  }
+}
+
+.equal4ClassName {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  .articleCard-container {
+    max-width: 24%;
+    margin-bottom: 10px;
+
+    &:nth-last-of-type(1) {
+      margin-left: 0;
+    }
   }
 }

@@ -1,86 +1,21 @@
-import React, { PureComponent } from 'react'
+import React, { Dispatch, PureComponent } from 'react'
 import ArticleCarousel from './ArticleCarousel'
-import { IArticleState } from '../../types/page/article'
+import { IArticleProps, IArticleState } from '../../types/page/article'
 import './index.less'
 import { Divider, Pagination } from 'antd';
 import ArticleList from './ArticleList';
+import { connect } from 'react-redux';
+import { IStore } from '../../types/store/action';
+import { getHotArticleData, getTotalArticleData } from '../../store/actions/article';
 
-export default class Article extends PureComponent<{}, IArticleState> {
+class Article extends React.PureComponent<IArticleProps, IArticleState> {
   state: IArticleState = {
     carouselObj: {
-      carouselArr: [
-        {
-          imgUrl: 'https://file.blog.xgblack.cn/wp-content/uploads/2020/02/convertkit-jQio01Aydt4-unsplash-scaled.jpg',
-        },
-        {
-          imgUrl: 'https://file.blog.xgblack.cn/wp-content/uploads/2021/01/01.png',
-        },
-        {
-          imgUrl: 'https://file.blog.xgblack.cn/wp-content/uploads/2020/06/04c691008a80225516c912b857eabd6c.jpg',
-        },
-        {
-          imgUrl: 'https://file.blog.xgblack.cn/wp-content/uploads/2020/02/3f12e7af3a6d99f54ad316fca80ff32e.jpg',
-        },
-      ],
+      carouselArr: this.props.hotArticleData,
       curIndex: 0,
     },
     // 文章列表
-    articleArr: [
-      {
-        title: 'java爬虫练习|爬取京东上的手机商品数据',
-        imgUrl: 'https://file.blog.xgblack.cn/wp-content/uploads/2020/01/1a2de4413ec1dd60ba8cc08c27ea0926.jpg',
-        date: '2020年2月15日',
-        reading: 3093,
-        like: '100',
-        msg: 8,
-        id: 2
-      },
-      {
-        title: 'vue迁都xxx',
-        imgUrl: 'https://file.blog.xgblack.cn/wp-content/uploads/2020/01/1a2de4413ec1dd60ba8cc08c27ea0926.jpg',
-        date: '2020年2月15日',
-        reading: 323,
-        like: '545',
-        msg: 2,
-        id: 1
-      },
-      {
-        title: 'dfsa十分士大夫|爬取京东上爬取京东上的手机商品数据爬取京东上的手机商品数据的手机商品数据',
-        imgUrl: 'https://file.blog.xgblack.cn/wp-content/uploads/2020/01/1a2de4413ec1dd60ba8cc08c27ea0926.jpg',
-        date: '2020年2月15日',
-        reading: 3093,
-        like: '100',
-        msg: 8,
-        id: 4
-      },
-      {
-        title: 'dfsa十分士大夫',
-        imgUrl: 'https://file.blog.xgblack.cn/wp-content/uploads/2020/01/1a2de4413ec1dd60ba8cc08c27ea0926.jpg',
-        date: '2020年2月15日',
-        reading: 323,
-        like: '545',
-        msg: 2,
-        id: 5
-      },
-      {
-        title: 'dfsa十分士大夫',
-        imgUrl: 'https://file.blog.xgblack.cn/wp-content/uploads/2020/01/1a2de4413ec1dd60ba8cc08c27ea0926.jpg',
-        date: '2020年2月15日',
-        reading: 323,
-        like: '545',
-        msg: 2,
-        id: 6
-      },
-      {
-        title: 'dfsa十分士大夫',
-        imgUrl: 'https://file.blog.xgblack.cn/wp-content/uploads/2020/01/1a2de4413ec1dd60ba8cc08c27ea0926.jpg',
-        date: '2020年2月15日',
-        reading: 323,
-        like: '545',
-        msg: 2,
-        id: 7
-      }
-    ]
+    articleArr: this.props.totalArticleData
   }
   /**
    * li dom
@@ -141,6 +76,14 @@ export default class Article extends PureComponent<{}, IArticleState> {
    * 组件挂载完成获取lidom
    */
   componentDidMount() {
+    // 获取数据
+    if (this.state.carouselObj.carouselArr.length === 0) {
+      this.props.getHotArticleData();
+    }
+    if (this.state.articleArr.length === 0) {
+      this.props.getTotalArticleData();
+    }
+
     this.liDom = document.getElementsByClassName('box-ul')[0].getElementsByTagName('li')
     this.carouselContDom = document.getElementsByClassName('carousel-container')[0].getElementsByClassName('content')[0]
   }
@@ -149,17 +92,43 @@ export default class Article extends PureComponent<{}, IArticleState> {
     return (
       <div className='article-container'>
         {/* 文章轮播图 */}
-        <ArticleCarousel timer={5000} data={this.state.carouselObj.carouselArr} curIndex={this.state.carouselObj.curIndex} onPre={this.onPre} onNext={this.onNext} />
+        <ArticleCarousel timer={5000} data={this.props.hotArticleData} curIndex={this.state.carouselObj.curIndex} onPre={this.onPre} onNext={this.onNext} />
         {/* 全部文章 */}
         <Divider dashed orientation="left">全部文章</Divider>
         {/* 全部文章列表 */}
-        <ArticleList articleList={this.state.articleArr}></ArticleList>
+        <ArticleList articleList={this.props.totalArticleData}></ArticleList>
         {/* 分页 */}
         <div className="page-container">
-          <Pagination defaultCurrent={1} total={50} />
+          <Pagination 
+           hideOnSinglePage={true}
+           current={Number(this.props.totalArticleCondition.pageNo) || 1} 
+           pageSize={Number(this.props.totalArticleCondition.pageSize) || 12}
+          total={Number(this.props.articleTotal)} 
+          />
         </div>
       </div>
     )
   }
 
 }
+
+const mapStateToProps = (store: IStore) => ({
+  ...store.article
+});
+
+
+const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
+  /**
+   * 获取所热门项目
+   */
+  getHotArticleData() {
+    dispatch(getHotArticleData())
+  },
+  /**
+   * 获取所有的项目
+   */
+  getTotalArticleData() {
+    dispatch(getTotalArticleData())
+  }
+})
+export default connect(mapStateToProps, mapDispatchToProps)(Article)

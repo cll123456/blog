@@ -5,13 +5,14 @@ import './index.less'
 
 export default function ArticleList(props: IArticleListProps) {
 
-  const dom = props.articleList.map(p => {
+  const dom = props.articleList.map((p,index) => {
+    
     return (
-      <ArticleCard {...p} key={p.id}></ArticleCard>
+      <ArticleCard {...p} key={p.id} ></ArticleCard>
     )
   })
   return (
-    <div className='articleList-container'>
+    <div className={` ${props.articleList.length % 4 === 0 || props.articleList.length % 4 === 1 ? 'equal4ClassName' : 'articleList-container'}`}>
       {dom}
     </div>
   )

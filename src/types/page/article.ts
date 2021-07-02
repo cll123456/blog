@@ -1,4 +1,5 @@
 import { IMyCardProps } from "../components/myCard";
+import { IArticleObjParams, IArticleStore } from "../store/action/article";
 
 
 export interface IArticleState {
@@ -22,6 +23,15 @@ export interface IArticleState {
   articleArr: IMyCardProps[]
 }
 
+export interface IArticleProps extends IArticleStore {
+  // 获取热门项目
+  getHotArticleData: () => void;
+  /**
+   * 获取所有的项目
+   */ 
+  getTotalArticleData: () => void;
+}
+
 /**
  * 文章列表
  */
@@ -32,19 +42,8 @@ export interface IArticleListProps {
 /**
  * 轮播图所需要的数据类型
  */
-export interface ICarouselData {
-  /**
-   * 图片地址
-   */
-  imgUrl: string,
-  /**
-   * 标签
-   */
-  label?: string,
-  /**
-   * 标题
-   */
-  title?: string,
+export interface ICarouselData extends IArticleObjParams {
+  
 }
 
 /**
