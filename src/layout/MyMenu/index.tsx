@@ -5,6 +5,7 @@ import { routes } from '../../routes';
 import { push } from 'connected-react-router'
 import { connect, useStore } from 'react-redux'
 import { IStore } from '../../types/store/action';
+import store from '../../store';
 
 function MyMenu(prop: { dispatchMenu: (path: string, store: IStore) => void, pathname: string }) {
   // 组装菜单
@@ -49,12 +50,13 @@ function MyMenu(prop: { dispatchMenu: (path: string, store: IStore) => void, pat
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
-  dispatchMenu(path: string, store: IStore) {
+  dispatchMenu(path: string) {
+    const storeData = store.getState() as IStore
     // 如果当前是项目
     if (path === '/Project') {
-      dispatch(push(`${path}?pageNo=${store.project.totalProjectCondition.pageNo}&title=${store.project.totalProjectCondition.title}`))
+      dispatch(push(`${path}?pageNo=${storeData.project.totalProjectCondition.pageNo}&title=${storeData.project.totalProjectCondition.title}`))
     } else if (path === '/Article') {
-      dispatch(push(`${path}?pageNo=${store.article.totalArticleCondition.pageNo}&title=${store.article.totalArticleCondition.title}&tagCloudId=${store.article.totalArticleCondition.tagCloudId}`))
+      dispatch(push(`${path}?pageNo=${storeData.article.totalArticleCondition.pageNo}&title=${storeData.article.totalArticleCondition.title}&tagCloudId=${storeData.article.totalArticleCondition.tagCloudId}`))
     } else {
       dispatch(push(path));
     }

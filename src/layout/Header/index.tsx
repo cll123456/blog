@@ -1,8 +1,8 @@
 import React, { Dispatch, Ref, useState } from 'react'
 import './index.less'
-import { Select, Switch } from 'antd';
+import { Button, Select, Switch, Tooltip } from 'antd';
 import { Input } from 'antd';
-import { SearchOutlined } from '@ant-design/icons';
+import { SearchOutlined, ReloadOutlined } from '@ant-design/icons';
 import { IHeaderRef, ILayoutHeader } from '../../types/layout/header';
 import { IStore } from '../../types/store/action';
 import { connect, useStore } from 'react-redux';
@@ -48,7 +48,7 @@ function Header(props: ILayoutHeader, ref: Ref<IHeaderRef>) {
               <Option value="/Article"> 文 章 </Option>
             </Select>
             <Input
-              style={{ width: 'calc(100% - 130px)' }}
+              style={{ width: 'calc(100% - 120px)' }}
               value={defaultInputVal}
               onChange={
                 (e) => {
@@ -67,13 +67,16 @@ function Header(props: ILayoutHeader, ref: Ref<IHeaderRef>) {
           </Input.Group>
         </div>
         <div className="header-changeSkin">
-          <Switch
-            checkedChildren={<>🌞</>}
-            unCheckedChildren={<>🌜</>}
-            defaultChecked={check}
-            onChange={props.changeSkin}
-          />
+          <Tooltip title={`切换${!check ? ' 明亮 ' : '暗黑'}主题`}>
+            <Switch
+              checkedChildren={<>🌞</>}
+              unCheckedChildren={<>🌜</>}
+              defaultChecked={check}
+              onChange={props.changeSkin}
+            />
+          </Tooltip>
         </div>
+
       </div>
     </div>
   )

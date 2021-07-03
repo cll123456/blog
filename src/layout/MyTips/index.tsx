@@ -9,6 +9,8 @@ import './index.less';
 import { Affix, Skeleton } from 'antd';
 import { useHistory } from 'react-router-dom';
 import * as H from 'history';
+import { push } from 'connected-react-router';
+import { getTotalArticleData, setTotalArticleCondition } from '../../store/actions/article';
 /**
  * 标签云数组展示组件
  * @param props 
@@ -70,7 +72,10 @@ const mapStateToProps = (state: IStore) => {
 const mapDispatchToProps = (dispatch: Dispatch<any>) => {
   return {
     onClickTips(id: string, history: H.History) {
-      history.push(`/Article?pageNo=1&title=&tagCloudId=${id}`);
+      const storeData = store.getState() as IStore;
+      dispatch(setTotalArticleCondition({tagCloudId: id}));
+      dispatch(getTotalArticleData());
+      dispatch(push(`/Article?pageNo=1&title=${storeData.article.totalArticleCondition.title}&tagCloudId=${id}`));
     }
   }
 }
