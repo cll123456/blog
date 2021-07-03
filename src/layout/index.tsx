@@ -83,10 +83,10 @@ function composeBody(handleSkin: (checked: boolean) => void) {
           {/* 主体内容路由区域 */}
           <div key={'routes'} className='body-container'>
             {renderRoutes(routes)}
+            <Footer key={'footer'}></Footer>
           </div>
         </div>
         {/* 尾巴 */}
-        <Footer key={'footer'}></Footer>
         <MyParticles key={'MyParticles'} />
       </div>
     )
@@ -104,10 +104,10 @@ function composeBody(handleSkin: (checked: boolean) => void) {
           {/* 主体内容路由区域 */}
           <div key={'routes'}>
             {renderRoutes(routes)}
+            <div key={'footer'}></div>
           </div>
         </div>
         {/* 尾巴 */}
-        <div key={'footer'}></div>
         <div key={'MyParticles'}></div>
       </div>
     )

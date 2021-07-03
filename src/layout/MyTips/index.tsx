@@ -70,7 +70,7 @@ const mapStateToProps = (state: IStore) => {
 const mapDispatchToProps = (dispatch: Dispatch<any>) => {
   return {
     onClickTips(id: string, history: H.History) {
-      history.push('/Article?tagCloudId=' + id)
+      history.push(`/Article?pageNo=1&title=&tagCloudId=${id}`);
     }
   }
 }

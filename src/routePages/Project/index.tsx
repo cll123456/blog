@@ -1,14 +1,13 @@
 import React, { Dispatch, useEffect, useLayoutEffect, useState } from 'react'
 import ProCarousel from './ProCarousel'
 import './index.less';
-import { Divider, Pagination } from 'antd';
+import { Divider, Pagination, Spin } from 'antd';
 import ProCardList from './ProCardList';
 import { IProjectProps } from '../../types/page/project';
 import { getHotProjectData, getTotalProjectData, setTotalProjectCondition } from '../../store/actions/project';
 import { IProjectStore } from '../../types/store/action/project';
 import { connect } from 'react-redux';
 import store from '../../store';
-import { Skeleton } from 'antd';
 import { push } from 'connected-react-router';
 import { IStore } from '../../types/store/action';
 
@@ -40,17 +39,14 @@ function Project(prop: IProjectProps) {
   }, [liDom, descContDom]);
 
   useLayoutEffect(() => {
-    // 如果pageNo存在，改变条件
-    if (storeData.router.location.query.pageNo) {
-      prop.setTotalCondition({ pageNo: storeData.router.location.query.pageNo })
-    }
+    console.log('propject', prop);
+
     if (hotProjectData.length === 0) {
-      // 获取热门项目
       prop.getHotProjectData();
     }
     if (cardList.length === 0) {
-      // 获取全部项目
-      prop.getTotalProjectData();
+      // 获取热门项目
+      prop.setTotalCondition({ pageNo: storeData.router.location.query.pageNo, title:  storeData.router.location.query.title})
     }
 
   }, [])
@@ -104,7 +100,7 @@ function Project(prop: IProjectProps) {
       {/* 全部文章 */}
       <Divider dashed orientation="left">全部项目</Divider>
       {/* 文章列表 */}
-      <Skeleton loading={state.totalProjectLoading} active >
+      <Spin spinning={state.totalProjectLoading}  >
         <ProCardList cardList={cardList}></ProCardList>
         {/* 分页 */}
         <div className="page-container">
@@ -113,10 +109,10 @@ function Project(prop: IProjectProps) {
             current={Number(state.totalProjectCondition.pageNo) || 1}
             pageSize={Number(state.totalProjectCondition.pageSize) || 6}
             total={state.count}
-            onChange={prop.onChangePage}
+            onChange={(page: number) => prop.setTotalCondition({ pageNo: page })}
           />
         </div>
-      </Skeleton>
+      </Spin>
     </div>
   )
 }
@@ -127,22 +123,16 @@ const mapStateToProps = (store: IStore) => {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
-  // 获取热门项目
-  getHotProjectData() {
-    dispatch(getHotProjectData() as never);
-  },
   // 获取全部项目
-  getTotalProjectData() {
-    dispatch(getTotalProjectData() as never);
+  getHotProjectData() {
+    dispatch(getHotProjectData());
   },
-  // 改变页面数
-  onChangePage(page: Number) {
-    dispatch(setTotalProjectCondition({ pageNo: page }));
-    const condition = (store.getState().project as IProjectStore).totalProjectCondition
-    dispatch(push(`/Project?pageNo=${condition.pageNo}&title=${condition.title}`))
-  },
+  // 改变参数获取数据
   setTotalCondition(condition: object) {
-    dispatch(setTotalProjectCondition(condition))
+    dispatch(setTotalProjectCondition(condition));
+    const conditions = (store.getState().project as IProjectStore).totalProjectCondition
+    dispatch(push(`/Project?pageNo=${conditions.pageNo}&title=${conditions.title}`))
+    dispatch(getTotalProjectData())
   }
 })
 

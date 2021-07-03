@@ -2,11 +2,14 @@ import React, { Dispatch, PureComponent } from 'react'
 import ArticleCarousel from './ArticleCarousel'
 import { IArticleProps, IArticleState } from '../../types/page/article'
 import './index.less'
-import { Divider, Pagination } from 'antd';
+import { Divider, Pagination, Spin } from 'antd';
 import ArticleList from './ArticleList';
 import { connect } from 'react-redux';
 import { IStore } from '../../types/store/action';
-import { getHotArticleData, getTotalArticleData } from '../../store/actions/article';
+import { getHotArticleData, getTotalArticleData, setTotalArticleCondition } from '../../store/actions/article';
+import store from '../../store';
+import { IArticleParams, IArticleStore } from '../../types/store/action/article';
+import { push } from 'connected-react-router';
 
 class Article extends React.PureComponent<IArticleProps, IArticleState> {
   state: IArticleState = {
@@ -30,6 +33,9 @@ class Article extends React.PureComponent<IArticleProps, IArticleState> {
    * 定时器
    */
   private timer!: number;
+  // 仓库
+  private store: IStore = store.getState() as unknown as IStore
+
   /**
    * 上一张图片
    * @param curIndex 
@@ -81,8 +87,11 @@ class Article extends React.PureComponent<IArticleProps, IArticleState> {
       this.props.getHotArticleData();
     }
     if (this.state.articleArr.length === 0) {
-      this.props.getTotalArticleData();
+      const queryParam = this.store.router.location.query as unknown as IArticleParams;
+      this.props.onChangeArticleParam(queryParam);
     }
+
+
 
     this.liDom = document.getElementsByClassName('box-ul')[0].getElementsByTagName('li')
     this.carouselContDom = document.getElementsByClassName('carousel-container')[0].getElementsByClassName('content')[0]
@@ -95,17 +104,20 @@ class Article extends React.PureComponent<IArticleProps, IArticleState> {
         <ArticleCarousel timer={5000} data={this.props.hotArticleData} curIndex={this.state.carouselObj.curIndex} onPre={this.onPre} onNext={this.onNext} />
         {/* 全部文章 */}
         <Divider dashed orientation="left">全部文章</Divider>
-        {/* 全部文章列表 */}
-        <ArticleList articleList={this.props.totalArticleData}></ArticleList>
-        {/* 分页 */}
-        <div className="page-container">
-          <Pagination 
-           hideOnSinglePage={true}
-           current={Number(this.props.totalArticleCondition.pageNo) || 1} 
-           pageSize={Number(this.props.totalArticleCondition.pageSize) || 12}
-          total={Number(this.props.articleTotal)} 
-          />
-        </div>
+        <Spin spinning={this.props.totalArticleLoading}>
+          {/* 全部文章列表 */}
+          <ArticleList articleList={this.props.totalArticleData}></ArticleList>
+          {/* 分页 */}
+          <div className="page-container">
+            <Pagination
+              hideOnSinglePage={true}
+              current={Number(this.props.totalArticleCondition.pageNo) || 1}
+              pageSize={Number(this.props.totalArticleCondition.pageSize) || 12}
+              total={Number(this.props.articleTotal)}
+              onChange={(page: number) => this.props.onChangeArticleParam({ pageNo: page })}
+            />
+          </div>
+        </Spin>
       </div>
     )
   }
@@ -125,10 +137,13 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
     dispatch(getHotArticleData())
   },
   /**
-   * 获取所有的项目
+   * 改变文章的参数，来查询
    */
-  getTotalArticleData() {
-    dispatch(getTotalArticleData())
+  onChangeArticleParam(param: Partial<IArticleParams>) {
+    dispatch(setTotalArticleCondition(param));
+    const condition = (store.getState().article as IArticleStore).totalArticleCondition
+    dispatch(push(`/Article?pageNo=${condition.pageNo}&title=${condition.title}&tagCloudId=${condition.tagCloudId}`));
+    dispatch(getTotalArticleData());
   }
 })
 export default connect(mapStateToProps, mapDispatchToProps)(Article)

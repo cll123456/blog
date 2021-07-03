@@ -6,7 +6,6 @@ import './index.less'
 export default function ArticleList(props: IArticleListProps) {
 
   const dom = props.articleList.map((p,index) => {
-    
     return (
       <ArticleCard {...p} key={p.id} ></ArticleCard>
     )

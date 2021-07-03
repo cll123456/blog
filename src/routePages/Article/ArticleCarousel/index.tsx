@@ -33,7 +33,7 @@ export default function ArticleCarousel(props: IArticleCarouselProps) {
   // generate dom
   const carouselDom = props.data.map((p: ICarouselData, index: number) => {
     return (
-      <li className={`${index === 0 ? 'showNext' : ''}`} key={p.imgUrl}>
+      <li className={`${index === 0 ? 'showNext' : ''}`} key={p.id}>
         <div className="file-icons">
           <FolderOutlined />
         </div>

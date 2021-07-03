@@ -8,7 +8,6 @@ import { getHotProjectData, getTotalProjectData, setHotProjectData, setTotalProj
 export default function* () {
   yield takeEvery(getHotProjectData.toString(), getHotProjectEffect);
   yield takeEvery(getTotalProjectData.toString(), getTotalProjectEffect);
-  yield takeEvery(setTotalProjectCondition, getTotalProjectEffect)
 }
 
 /**

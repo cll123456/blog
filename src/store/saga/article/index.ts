@@ -1,8 +1,8 @@
 import { takeEvery, call, put, select } from "@redux-saga/core/effects"
 import { apiGetArticleByParams, apiGetHotArticle } from "../../../api/article";
 import { IStore } from "../../../types/store/action";
-import { IArticleListRes } from "../../../types/store/action/article";
-import { getHotArticleData, getTotalArticleData, setHotArticleData, setTotalArticleData, setTotalArticleLoading, setTotalArticleTotal } from "../../actions/article"
+import { IArticleListRes, IArticleParams } from "../../../types/store/action/article";
+import { getHotArticleData, getTotalArticleData, setHotArticleData, setTotalArticleCondition, setTotalArticleData, setTotalArticleLoading, setTotalArticleTotal } from "../../actions/article"
 
 export default function* () {
   yield takeEvery(getHotArticleData, getHotArticleDataEffects);

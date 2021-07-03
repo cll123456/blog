@@ -79,7 +79,7 @@ const articleReducers = handleActions<IArticleStore, any>({
   /**
   * 判断是否位设置热门文章条件
   */
-  [setTotalArticleCondition.toString()]: (state, { payload }) => ({ ...state, ...{ totalArticleCondition: { ...payload, ...state.totalArticleCondition } } }),
+  [setTotalArticleCondition.toString()]: (state, { payload }) => ({ ...state, totalArticleCondition: { ...state.totalArticleCondition, ...payload,  } }),
 }, initData);
 
 export default articleReducers;

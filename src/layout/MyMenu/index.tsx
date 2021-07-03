@@ -2,12 +2,11 @@ import React, { Dispatch, useCallback } from 'react'
 import './index.less'
 import { Menu } from 'antd';
 import { routes } from '../../routes';
-import { useHistory, useLocation } from 'react-router';
 import { push } from 'connected-react-router'
 import { connect, useStore } from 'react-redux'
 import { IStore } from '../../types/store/action';
 
-function MyMenu(prop: { dispatchMenu: (path: string, store: IStore) => void }) {
+function MyMenu(prop: { dispatchMenu: (path: string, store: IStore) => void, pathname: string }) {
   // 组装菜单
   const menuList = routes.map(p => {
     // 需要组转的路由，首屏不需要
@@ -19,11 +18,9 @@ function MyMenu(prop: { dispatchMenu: (path: string, store: IStore) => void }) {
       )
     }
   })
-  // 获取当前的路径名称
-  const { pathname } = useLocation();
+
   // 获取仓库
   const store: IStore = useStore().getState();
-
   // 点击跳转页面
   const handleGotoPage = useCallback(
     ({ item, key, keyPath }) => {
@@ -42,7 +39,7 @@ function MyMenu(prop: { dispatchMenu: (path: string, store: IStore) => void }) {
       <Menu
         style={{ width: 256 }}
         mode="inline"
-        defaultSelectedKeys={[pathname]}
+        selectedKeys={[prop.pathname]}
         onClick={handleGotoPage}
       >
         {menuList}
@@ -55,12 +52,17 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
   dispatchMenu(path: string, store: IStore) {
     // 如果当前是项目
     if (path === '/Project') {
-      
       dispatch(push(`${path}?pageNo=${store.project.totalProjectCondition.pageNo}&title=${store.project.totalProjectCondition.title}`))
+    } else if (path === '/Article') {
+      dispatch(push(`${path}?pageNo=${store.article.totalArticleCondition.pageNo}&title=${store.article.totalArticleCondition.title}&tagCloudId=${store.article.totalArticleCondition.tagCloudId}`))
     } else {
       dispatch(push(path));
     }
   }
 })
 
-export default connect(null, mapDispatchToProps)(MyMenu)
+const mapStateToProps = (store: IStore) => ({
+  pathname: store.router.location.pathname
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyMenu)
