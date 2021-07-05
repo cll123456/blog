@@ -1,8 +1,8 @@
 import React, { Dispatch, Ref, useState } from 'react'
 import './index.less'
-import { Button, Select, Switch, Tooltip } from 'antd';
+import {  Select, Switch, Tooltip } from 'antd';
 import { Input } from 'antd';
-import { SearchOutlined, ReloadOutlined } from '@ant-design/icons';
+import { SearchOutlined } from '@ant-design/icons';
 import { IHeaderRef, ILayoutHeader } from '../../types/layout/header';
 import { IStore } from '../../types/store/action';
 import { connect, useStore } from 'react-redux';

@@ -11,7 +11,7 @@ function MyMenu(prop: { dispatchMenu: (path: string, store: IStore) => void, pat
   // 组装菜单
   const menuList = routes.map(p => {
     // 需要组转的路由，首屏不需要
-    if (p.path !== '*') {
+    if (p.path !== '*' && p.path !== '/ArticleDetail') {
       return (
         <Menu.Item key={(p.path as string)} icon={p.meta.icon}>
           {p.name}

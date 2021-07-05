@@ -7,7 +7,7 @@ import { renderTime } from '../../../utils/dateUtil';
 
 
 export default function ArticleCard(props: IMyCardProps) {
-  
+
   return (
     <div className='articleCard-container' style={props.style}>
       <h4>
@@ -32,7 +32,12 @@ export default function ArticleCard(props: IMyCardProps) {
           </Tooltip>
         </div>
         <div className="btn">
-          <Button type="primary" shape="round" > 阅读全文 </Button>
+          <Button
+            type="primary"
+            shape="round"
+            onClick={() => {
+              props.goToArticleDetail(props.id)
+            }}> 阅读全文 </Button>
         </div>
       </div>
     </div>

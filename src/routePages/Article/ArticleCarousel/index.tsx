@@ -23,7 +23,7 @@ export default function ArticleCarousel(props: IArticleCarouselProps) {
     }
   }
 
-  useEffect(() => { 
+  useEffect(() => {
     // 返回定时器清理函数
     return cancelTimer;
   }, [])
@@ -74,7 +74,9 @@ export default function ArticleCarousel(props: IArticleCarouselProps) {
           <span>{genCloud}</span>
         </div>
         <div className="btn">
-          <Button type="dashed" shape="round" > 阅读全文 {`>`} </Button>
+          <Button type="dashed" shape="round" onClick={() => {
+            props.goToArticleDetail(props.data[props.curIndex].id as string)
+          }}> 阅读全文 {`>`} </Button>
         </div>
       </div>
     </div>

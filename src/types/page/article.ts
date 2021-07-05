@@ -31,13 +31,22 @@ export interface IArticleProps extends IArticleStore {
    * 改变参数获取数据
    */
   onChangeArticleParam: (param: Partial<IArticleParams>) => void;
+  /**
+   * 跳转到文章详情
+   */ 
+  goToArticleDetail: (id: string | number) => void;
 }
 
 /**
  * 文章列表
  */
 export interface IArticleListProps {
-  articleList: IMyCardProps[]
+  
+  articleList: IMyCardProps[],
+  /**
+   * 跳转到文章详情
+   */ 
+   goToArticleDetail: (id: string | number) => void;
 }
 
 /**
@@ -67,6 +76,10 @@ export interface IArticleCarouselProps {
    * 下一张
    */
   onNext: (curIndex: number) => void,
+  /**
+   * 跳转到文章详情
+   */ 
+   goToArticleDetail: (id: string | number) => void;
   /**
    * 定时器的时间
    */

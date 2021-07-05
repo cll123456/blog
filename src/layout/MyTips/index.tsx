@@ -1,9 +1,7 @@
-import React, { Dispatch } from 'react'
-import { Unsubscribe } from 'redux-saga';
-import { apiGetMyTips } from '../../api/layout';
+import React, { Dispatch, useLayoutEffect } from 'react'
 import store from '../../store';
-import { setTipData, setTipIsLoading } from '../../store/actions/myTips';
-import { IMyTipsProps, IMyTipStore, tipObj } from '../../types/layout/myTips';
+import { getTipData, } from '../../store/actions/myTips';
+import { IMyTipsProps } from '../../types/layout/myTips';
 import { IStore } from '../../types/store/action';
 import './index.less';
 import { Affix, Skeleton } from 'antd';
@@ -11,14 +9,21 @@ import { useHistory } from 'react-router-dom';
 import * as H from 'history';
 import { push } from 'connected-react-router';
 import { getTotalArticleData, setTotalArticleCondition } from '../../store/actions/article';
+import { connect } from 'react-redux';
 /**
  * 标签云数组展示组件
  * @param props 
  * @returns 
  */
-function MyTips(props: IMyTipsProps) {
+function Tip(props: IMyTipsProps) {
   const history = useHistory();
-  const liDom = props.dataList?.map((p, i) => {
+
+  useLayoutEffect(() => {
+    if (props.myTips.dataList.length === 0) {
+      props.initTipData();
+    }
+  }, [])
+  const liDom = props.myTips.dataList?.map((p, i) => {
     return (
       <li key={p.imgUrl + i} onClick={() => props.onClickTips(p.id, history)}>
         <div className="img-title">
@@ -31,37 +36,53 @@ function MyTips(props: IMyTipsProps) {
       </li>
     )
   })
-
-  return props.dataList && props.dataList.length > 0 ?
-    (
-      <Affix offsetTop={50} >
+  let dom = (<></>);
+  if (props.myTips.dataList && props.myTips.dataList.length > 0) {
+    if (props.router.location.pathname === '/ArticleDetail') {
+      dom = (
         <div className='myTips-container'>
           <h4>标签云</h4>
           <hr />
           <div className="tips-body">
-            <Skeleton loading={props.loading}>
+            <Skeleton loading={props.myTips.loading}>
               <ul>
                 {liDom}
               </ul>
             </Skeleton>
           </div>
         </div>
-      </Affix>
-    ) :
-    (<div><h4></h4><div></div></div>)
+      )
+    } else {
+      dom = (
+        <Affix offsetTop={50} >
+          <div className='myTips-container'>
+            <h4>标签云</h4>
+            <hr />
+            <div className="tips-body">
+              <Skeleton loading={props.myTips.loading}>
+                <ul>
+                  {liDom}
+                </ul>
+              </Skeleton>
+            </div>
+          </div>
+        </Affix>
+      )
+    }
+  } else {
+    dom = (<div><h4></h4><div></div></div>)
+  }
+
+  return dom;
 }
 
-// 默认值
-MyTips.defaultProps = {
-  dataList: []
-}
 /**
  * 映射状态
  * @param state 
  * @returns 
  */
 const mapStateToProps = (state: IStore) => {
-  return state.myTips
+  return { myTips: state.myTips, router: state.router }
 }
 
 /**
@@ -73,9 +94,13 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => {
   return {
     onClickTips(id: string, history: H.History) {
       const storeData = store.getState() as IStore;
-      dispatch(setTotalArticleCondition({tagCloudId: id}));
+      dispatch(setTotalArticleCondition({ tagCloudId: id }));
       dispatch(getTotalArticleData());
       dispatch(push(`/Article?pageNo=1&title=${storeData.article.totalArticleCondition.title}&tagCloudId=${id}`));
+    },
+    // 初始化数据
+    initTipData() {
+      dispatch(getTipData())
     }
   }
 }
@@ -84,38 +109,4 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => {
  * 标签云的数组容器组件
  */
 
-export default class extends React.PureComponent<any, IMyTipStore>{
-  
-  // 初始化state
-  state = mapStateToProps(store.getState() as any);
-  // 取消监听
-  onCancelListener!: Unsubscribe
-  // 组件挂载获取数据
-  async componentDidMount() {
-    
-    // 需要先写监听store变化的函数
-    this.onCancelListener = store.subscribe(() => {
-      this.setState(mapStateToProps(store.getState() as any))
-    })
-    // 判断数据不存在，获取数据
-    if (this.state.dataList.length === 0) {
-      store.dispatch(setTipIsLoading(true) as never);
-      // 获取数据
-      const res: tipObj[] = await apiGetMyTips().then(res => res.data);
-      store.dispatch(setTipData(res.concat(res).concat(res).concat(res)) as never)
-      // 关闭loading
-      store.dispatch(setTipIsLoading(false) as never);
-    }
-  }
-
-  componentWillUnmount() {
-    // 取消监听
-    this.onCancelListener();
-  }
-
-  render() {
-    return (
-      <MyTips {...this.state} {...mapDispatchToProps(store.dispatch as any)}></MyTips>
-    )
-  }
-}
+export default connect(mapStateToProps, mapDispatchToProps)(Tip)

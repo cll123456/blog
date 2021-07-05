@@ -7,7 +7,7 @@ export default function ArticleList(props: IArticleListProps) {
 
   const dom = props.articleList.map((p,index) => {
     return (
-      <ArticleCard {...p} key={p.id} ></ArticleCard>
+      <ArticleCard {...p} key={p.id}  {...props}></ArticleCard>
     )
   })
   return (

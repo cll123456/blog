@@ -15,6 +15,8 @@ import lighter from './../assets/style/index.less'
 import MyTips from './MyTips'
 import Footer from './Footer'
 import MyParticles from '../components/common/particles/MyParticles'
+import { BackTop } from 'antd';
+import Like from './Like'
 
 
 export default function Layout() {
@@ -62,7 +64,8 @@ export default function Layout() {
  */
 function composeBody(handleSkin: (checked: boolean) => void) {
   // 获取当前的路径
-  const pathname = window.location.pathname
+  const pathname = window.location.pathname;
+  
   // 判断当前的路径是否在网站主体页面
   const isNeedHeader = routes.filter(r => r.path === pathname).length > 0;
   let body: JSX.Element = <></>;
@@ -78,7 +81,7 @@ function composeBody(handleSkin: (checked: boolean) => void) {
           <div key={'myMenu'} className='left-container'>
             <MyMenu></MyMenu>
             {/* 标签 */}
-            <MyTips></MyTips>
+            <MyTips />
           </div>
           {/* 主体内容路由区域 */}
           <div key={'routes'} className='body-container'>
@@ -86,7 +89,10 @@ function composeBody(handleSkin: (checked: boolean) => void) {
             <Footer key={'footer'}></Footer>
           </div>
         </div>
-        {/* 尾巴 */}
+        {/* 点赞 */}
+        <Like key={'Like'}></Like>
+        {/* 向上滚动 */}
+        <BackTop key={'BackTop'} />
         <MyParticles key={'MyParticles'} />
       </div>
     )
@@ -107,6 +113,8 @@ function composeBody(handleSkin: (checked: boolean) => void) {
             <div key={'footer'}></div>
           </div>
         </div>
+        <div key={'Like'}></div>
+        <div key={'BackTop'}></div>
         {/* 尾巴 */}
         <div key={'MyParticles'}></div>
       </div>

@@ -20,12 +20,16 @@ const myTipsActions = createActions({
    * @returns 
    */
   SET_TIP_DATA: (data: tipObj) => data,
+  /**
+   * 获取标签云的数据
+   */
+  GET_TIP_DATA: () => { },
 })
 
 /**
  * 对外导出layout action
  */
-export const { setTipIsLoading, setTipData } = myTipsActions;
+export const { setTipIsLoading, setTipData, getTipData } = myTipsActions;
 
 // 创建reducer
 const myTipsReducer = handleActions<IMyTipStore, any>({

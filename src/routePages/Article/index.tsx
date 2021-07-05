@@ -90,9 +90,6 @@ class Article extends React.PureComponent<IArticleProps, IArticleState> {
       const queryParam = this.store.router.location.query as unknown as IArticleParams;
       this.props.onChangeArticleParam(queryParam);
     }
-
-
-
     this.liDom = document.getElementsByClassName('box-ul')[0].getElementsByTagName('li')
     this.carouselContDom = document.getElementsByClassName('carousel-container')[0].getElementsByClassName('content')[0]
   }
@@ -101,12 +98,20 @@ class Article extends React.PureComponent<IArticleProps, IArticleState> {
     return (
       <div className='article-container'>
         {/* 文章轮播图 */}
-        <ArticleCarousel timer={5000} data={this.props.hotArticleData} curIndex={this.state.carouselObj.curIndex} onPre={this.onPre} onNext={this.onNext} />
+        <ArticleCarousel
+          goToArticleDetail={this.props.goToArticleDetail}
+          timer={5000}
+          data={this.props.hotArticleData}
+          curIndex={this.state.carouselObj.curIndex}
+          onPre={this.onPre}
+          onNext={this.onNext} />
         {/* 全部文章 */}
         <Divider dashed orientation="left">全部文章</Divider>
         <Spin spinning={this.props.totalArticleLoading}>
           {/* 全部文章列表 */}
-          <ArticleList articleList={this.props.totalArticleData}></ArticleList>
+          <ArticleList 
+          articleList={this.props.totalArticleData}   
+          goToArticleDetail={this.props.goToArticleDetail}></ArticleList>
           {/* 分页 */}
           <div className="page-container">
             <Pagination
@@ -144,6 +149,13 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
     const condition = (store.getState().article as IArticleStore).totalArticleCondition
     dispatch(push(`/Article?pageNo=${condition.pageNo}&title=${condition.title}&tagCloudId=${condition.tagCloudId}`));
     dispatch(getTotalArticleData());
+  },
+  /**
+   * 打开文章详情
+   */
+  goToArticleDetail(id: string | number) {
+    // 打开文章详情，新窗口
+    dispatch(push(`/ArticleDetail?articleId=${id}`))
   }
 })
 export default connect(mapStateToProps, mapDispatchToProps)(Article)

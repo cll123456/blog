@@ -1,24 +1,27 @@
 /**
  * 标签云云接口参数
  */
- import * as H from 'history';
+import * as H from 'history';
+import * as CRR from 'connected-react-router'
 export interface IMyTipsProps {
-  // 标签云数据对象
- dataList?: tipObj[],
- // 是否加载中
- loading: boolean, 
- /**
-  * 点击标签，获取对应的文章
-  */
- onClickTips: (id:string, history: H.History) => void
+ 
+  myTips: IMyTipStore
+  /**
+   * 点击标签，获取对应的文章
+   */
+  onClickTips: (id: string, history: H.History) => void,
+  // 初始化数据
+  initTipData: () => void,
+  // 路由
+  router: CRR.RouterState
 }
 /**
  * 单个标签对象
  */
 export interface tipObj {
- /**
-   * 标签图片
-   */
+  /**
+    * 标签图片
+    */
   imgUrl: string,
   /**
    * 标签标题
@@ -32,6 +35,13 @@ export interface tipObj {
   id: string,
 }
 
+/**
+ * 标签查询结果
+ */
+export interface ITipsRes {
+  code: string,
+  data: tipObj[]
+}
 /**
  * 布局数据
  */
