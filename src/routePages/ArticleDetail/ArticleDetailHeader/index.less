@@ -1,0 +1,27 @@
+@import './../../../assets/style/common.less';
+
+.articleDetailHeader-container {
+  .m-b-5();
+  background-color: var(--main-comp-bg-color);
+  padding: 5px 10px;
+
+  .title-container {
+    display: flex;
+    align-items: center;
+
+    h1 {
+      margin: 0;
+    }
+
+    span {
+      margin-left: 30px;
+    }
+  }
+
+  .articleDetail-container {
+    span:not(:first-of-type) {
+      margin-left: 20px;
+    }
+  }
+
+}

@@ -11,7 +11,7 @@ const Home = lazy(() => import('../routePages/Home'));
 const About = lazy(() => import('../routePages/About'));
 const Article = lazy(() => import('../routePages/Article'));
 const Gauge = lazy(() => import('../routePages/Gauge'));
-const Hot = lazy(() => import('../routePages/Hot'));
+const ArticleDetail = lazy(() => import('../routePages/ArticleDetail'));
 const Project = lazy(() => import('../routePages/Project'));
 const FirstScreen = lazy(() => import('../routePages/FirstScreen'))
 
@@ -59,15 +59,15 @@ export const routes: RouteConfig[] = [
       icon: <InsertRowAboveOutlined />
     }
   },
-  // {
-  //   path: "/Hot",
-  //   exact: true,
-  //   name: '热门',
-  //   render: withLazyComp(Hot),
-  //   meta: {
-  //     icon: <FireOutlined />
-  //   }
-  // },
+  {
+    path: "/ArticleDetail",
+    exact: true,
+    name: '热门',
+    render: withLazyComp(ArticleDetail),
+    meta: {
+      icon: <FireOutlined />
+    }
+  },
   {
     path: "/About",
     exact: true,
