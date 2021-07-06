@@ -123,7 +123,11 @@ export interface IArticleDetailStore {
   /**
    * 当前文章id
    */
-  currentArticleId: string | number
+  currentArticleId: string | number,
+  /**
+   * 文章目录
+   */
+  articleDetailDialog: IArticleDetailDialogObj[]
 }
 
 /**
@@ -149,4 +153,8 @@ export interface IArticleDetailReadOrLike {
 export interface IArticleDetailRes {
   code: string,
   data: IArticleResData
+}
+
+export interface IArticleDetailDialogObj {
+  [key: string]: any
 }

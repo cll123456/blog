@@ -1,5 +1,5 @@
 import { createActions, handleActions } from "redux-actions";
-import { IArticleCommentObj, IArticleDetailStore, IArticleResData } from "../../../types/store/action/articleDetail";
+import { IArticleCommentObj, IArticleDetailDialogObj, IArticleDetailStore, IArticleResData } from "../../../types/store/action/articleDetail";
 
 const initData: IArticleDetailStore = {
   currentArticleId: '',
@@ -25,8 +25,8 @@ const initData: IArticleDetailStore = {
     content: '',
     userId: '',
     articleId: ''
-  }
-
+  },
+  articleDetailDialog: []
 }
 
 const createArticleActions = createActions({
@@ -36,7 +36,7 @@ const createArticleActions = createActions({
   SET_ARTICLE_DETAIL_DATA: (data: IArticleResData) => data,
   /**
    * 当前文章id
-   */ 
+   */
   SET_ARTICLE_DETAIL_ID: (id: string | number) => id,
   /**
    * 获取文章详情数据
@@ -46,6 +46,13 @@ const createArticleActions = createActions({
    * 设置文章详情loading
    */
   SET_ARTICLE_DETAIL_LOADING: (loading: boolean) => loading,
+  /**
+   * 设置文章目录
+   * @param dataArr 
+   * @returns 
+   */
+  SET_ARTICLE_DETAIL_DIALOG: (dataArr: IArticleDetailDialogObj[]) => dataArr,
+
   /**
    * 设置文章阅读数量，每一次打开，文章的阅读数量加1
    */
@@ -60,11 +67,11 @@ const createArticleActions = createActions({
   LOGIN_BY_GITUP: () => { },
   /**
    * 从localstorage中获取评论的用户信息
-   */ 
-  Get_USER_INFO: () => {}
+   */
+  Get_USER_INFO: () => { }
 })
 
-export const { setArticleDetailData, setArticleDetailId,setArticleLikeNum, setArticleComment, setArticleDetailLoading, getArticleDetailData, loginByGitup } = createArticleActions;
+export const { setArticleDetailData, setArticleDetailDialog, setArticleDetailId, setArticleLikeNum, setArticleComment, setArticleDetailLoading, getArticleDetailData, loginByGitup } = createArticleActions;
 
 
 const articleDetailReducers = handleActions<IArticleDetailStore, any>({
@@ -75,17 +82,24 @@ const articleDetailReducers = handleActions<IArticleDetailStore, any>({
   /**
    * 设置当前文章id
    * 
-   */ 
+   */
   [setArticleDetailId.toString()]: (state, { payload }) => ({ ...state, ...{ currentArticleId: payload } }),
+  /**
+   * 设置文章详情目录
+   * @param state 
+   * @param param1 
+   * @returns 
+   */
+  [setArticleDetailDialog.toString()]: (state, { payload }) => ({ ...state, articleDetailDialog: payload }),
   /**
     * 设置获取文章详情的数据
     */
-  [setArticleDetailData.toString()]: (state, { payload }) => ({ ...state, articleDetailData:{...state.articleDetailData, ... payload } }),
+  [setArticleDetailData.toString()]: (state, { payload }) => ({ ...state, articleDetailData: { ...state.articleDetailData, ...payload } }),
   /**
     * 设置获取文章详情的评论
     */
-  [setArticleComment.toString()]: (state, { payload }) => ({ ...state, commentParams:{ ...state.commentParams, ... payload} }),
- 
+  [setArticleComment.toString()]: (state, { payload }) => ({ ...state, commentParams: { ...state.commentParams, ...payload } }),
+
 }, initData);
 
 export default articleDetailReducers;

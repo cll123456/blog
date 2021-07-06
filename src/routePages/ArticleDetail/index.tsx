@@ -2,9 +2,10 @@ import { Spin } from 'antd'
 import React, { Dispatch, useLayoutEffect } from 'react'
 import { connect } from 'react-redux'
 import store from '../../store'
-import { getArticleDetailData, setArticleDetailId } from '../../store/actions/articleDetail'
+import { getArticleDetailData, setArticleDetailDialog, setArticleDetailId } from '../../store/actions/articleDetail'
 import { IArticleDetailProps } from '../../types/page/articleDetail'
 import { IStore } from '../../types/store/action'
+import { IArticleDetailDialogObj } from '../../types/store/action/articleDetail'
 import ArticleDetailBody from './ArticleDetailBody'
 import ArticleDetailComment from './ArticleDetailComment'
 import ArticleDetailHeader from './ArticleDetailHeader'
@@ -24,7 +25,10 @@ function ArticleDetail(props: IArticleDetailProps) {
     <div className='articleDetail-container'>
       <Spin spinning={props.articleDetailStore.articleDetailLoading}>
         <ArticleDetailHeader {...props.articleDetailStore.articleDetailData.details}></ArticleDetailHeader>
-        <ArticleDetailBody content={props.articleDetailStore.articleDetailData.details.content}></ArticleDetailBody>
+        <ArticleDetailBody
+          content={props.articleDetailStore.articleDetailData.details.content}
+          setArticleDetailDialog={props.setArticleDetailDialog}
+        ></ArticleDetailBody>
         <ArticleDetailComment></ArticleDetailComment>
       </Spin>
     </div>
@@ -42,6 +46,14 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
     const storeData: IStore = store.getState() as unknown as IStore;
     dispatch(setArticleDetailId(storeData.router.location.query.articleId));
     dispatch(getArticleDetailData())
+  },
+  /**
+   * 设置文章的目录
+   */
+  setArticleDetailDialog(dialogArr: IArticleDetailDialogObj[]) {
+    console.log(dialogArr,'----=======dialogArr');
+    
+    dispatch(setArticleDetailDialog(dialogArr));
   }
 })
 

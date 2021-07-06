@@ -17,6 +17,7 @@ import Footer from './Footer'
 import MyParticles from '../components/common/particles/MyParticles'
 import { BackTop } from 'antd';
 import Like from './Like'
+import ArticleDialog from './ArticleDialog'
 
 
 export default function Layout() {
@@ -82,6 +83,8 @@ function composeBody(handleSkin: (checked: boolean) => void) {
             <MyMenu></MyMenu>
             {/* 标签 */}
             <MyTips />
+            {/* 文章目录 */}
+            <ArticleDialog />
           </div>
           {/* 主体内容路由区域 */}
           <div key={'routes'} className='body-container'>
