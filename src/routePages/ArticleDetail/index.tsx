@@ -10,6 +10,9 @@ import ArticleDetailBody from './ArticleDetailBody'
 import ArticleDetailComment from './ArticleDetailComment'
 import ArticleDetailHeader from './ArticleDetailHeader'
 import './index.less'
+import marked from 'marked'
+
+
 
 
 function ArticleDetail(props: IArticleDetailProps) {
@@ -18,8 +21,11 @@ function ArticleDetail(props: IArticleDetailProps) {
     if (props.articleDetailStore.currentArticleId !== props.router.location.query.articleId) {
       // 请求数据
       props.getDetailData();
+    
     }
   }, []);
+
+
 
   return (
     <div className='articleDetail-container'>
@@ -27,7 +33,6 @@ function ArticleDetail(props: IArticleDetailProps) {
         <ArticleDetailHeader {...props.articleDetailStore.articleDetailData.details}></ArticleDetailHeader>
         <ArticleDetailBody
           content={props.articleDetailStore.articleDetailData.details.content}
-          setArticleDetailDialog={props.setArticleDetailDialog}
         ></ArticleDetailBody>
         <ArticleDetailComment></ArticleDetailComment>
       </Spin>
@@ -51,8 +56,6 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
    * 设置文章的目录
    */
   setArticleDetailDialog(dialogArr: IArticleDetailDialogObj[]) {
-    console.log(dialogArr,'----=======dialogArr');
-    
     dispatch(setArticleDetailDialog(dialogArr));
   }
 })

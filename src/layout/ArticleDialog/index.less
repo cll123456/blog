@@ -1,6 +1,6 @@
 @import './../../assets/style/common.less';
 
-.articleDialog-container{
+.articleDialog-container {
   width: 100%;
   transition: all .25s;
   background-color: var(--main-comp-bg-color);
@@ -16,7 +16,50 @@
     margin-bottom: 0;
   }
 
-  .aLinkClass{
-    display: block;
+  .articleDialog-body {
+    .cursor-pointer();
+    max-height: calc(100vh - 140px);
+    overflow: auto;
+    width: 100%;
+
+    .aLinkClass {
+      display: block;
+      padding: 5px 10px;
+      color: inherit;
+
+      &:hover {
+        transition: all .3s;
+        color: fade(@primary-color, 80%);
+      }
+    }
+    
+
+    .h2container {
+      padding-left: 45px;
+    }
+
+    .h3container {
+      padding-left: 85px;
+    }
+
+    .h4container {
+      padding-left: 125px;
+      ;
+    }
+
+    .h5container {
+      padding-left: 165px;
+      ;
+    }
+
+    .h6container {
+      padding-left: 205px;
+      ;
+    }
+
+    .currentChooseAnchor{
+      color: fade(@primary-color, 90%);
+      background-color: rgb(240, 240, 241);
+    }
   }
 }

@@ -22,7 +22,7 @@ function Like(props: { setLike: () => void, router: any }) {
             setIsFirst(true);
           }
         }}
-        className="like-container ant-back-top ant-back-top-icon ant-fade-enter ant-fade-enter-active ant-fade ant-back-top-content">
+        className=" ant-back-top ant-back-top-icon ant-fade-enter ant-fade-enter-active ant-fade ant-back-top-content like-container">
         <LikeOutlined style={{ color: isLike ? '#f40' : '' }} />
       </div>
       : <div></div>}

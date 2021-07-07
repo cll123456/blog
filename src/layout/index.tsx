@@ -84,7 +84,7 @@ function composeBody(handleSkin: (checked: boolean) => void) {
             {/* 标签 */}
             <MyTips />
             {/* 文章目录 */}
-            <ArticleDialog />
+            <ArticleDialog key={'ArticleDialog'} />
           </div>
           {/* 主体内容路由区域 */}
           <div key={'routes'} className='body-container'>

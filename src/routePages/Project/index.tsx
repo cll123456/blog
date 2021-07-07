@@ -39,8 +39,6 @@ function Project(prop: IProjectProps) {
   }, [liDom, descContDom]);
 
   useLayoutEffect(() => {
-    console.log('propject', prop);
-
     if (hotProjectData.length === 0) {
       prop.getHotProjectData();
     }

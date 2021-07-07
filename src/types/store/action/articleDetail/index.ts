@@ -1,3 +1,5 @@
+import { ILinkObj } from "../../../layout/articleDetail";
+
 /**
  * 文章返回的对象
  */
@@ -127,7 +129,7 @@ export interface IArticleDetailStore {
   /**
    * 文章目录
    */
-  articleDetailDialog: IArticleDetailDialogObj[]
+  articleDetailDialog: ILinkObj[]
 }
 
 /**
@@ -153,8 +155,4 @@ export interface IArticleDetailReadOrLike {
 export interface IArticleDetailRes {
   code: string,
   data: IArticleResData
-}
-
-export interface IArticleDetailDialogObj {
-  [key: string]: any
 }
