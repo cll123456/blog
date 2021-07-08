@@ -3,14 +3,13 @@ import React, { Dispatch, useLayoutEffect } from 'react'
 import { connect } from 'react-redux'
 import store from '../../store'
 import { getArticleDetailData, setArticleDetailDialog, setArticleDetailId } from '../../store/actions/articleDetail'
+import { ILinkObj } from '../../types/layout/articleDetail'
 import { IArticleDetailProps } from '../../types/page/articleDetail'
 import { IStore } from '../../types/store/action'
-import { IArticleDetailDialogObj } from '../../types/store/action/articleDetail'
 import ArticleDetailBody from './ArticleDetailBody'
 import ArticleDetailComment from './ArticleDetailComment'
 import ArticleDetailHeader from './ArticleDetailHeader'
 import './index.less'
-import marked from 'marked'
 
 
 
@@ -55,7 +54,7 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
   /**
    * 设置文章的目录
    */
-  setArticleDetailDialog(dialogArr: IArticleDetailDialogObj[]) {
+  setArticleDetailDialog(dialogArr: ILinkObj[]) {
     dispatch(setArticleDetailDialog(dialogArr));
   }
 })

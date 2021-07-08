@@ -13,7 +13,8 @@ const Article = lazy(() => import('../routePages/Article'));
 const Gauge = lazy(() => import('../routePages/Gauge'));
 const ArticleDetail = lazy(() => import('../routePages/ArticleDetail'));
 const Project = lazy(() => import('../routePages/Project'));
-const FirstScreen = lazy(() => import('../routePages/FirstScreen'))
+const FirstScreen = lazy(() => import('../routePages/FirstScreen'));
+const Login = lazy(() => import('../routePages/Login'));
 
 /**
  * 路由配置
@@ -23,6 +24,7 @@ export const routes: RouteConfig[] = [
   {
     path: "/Home",
     exact: true,
+    hidden: false,
     component: withLazyComp(FirstScreen),
     name: '首页',
     meta: {
@@ -34,6 +36,7 @@ export const routes: RouteConfig[] = [
     exact: true,
     name: '文章',
     component: withLazyComp(Article as any),
+    hidden: false,
     meta: {
       icon: <ContainerOutlined />
     }
@@ -42,6 +45,7 @@ export const routes: RouteConfig[] = [
     path: "/Project",
     exact: true,
     name: '项目',
+    hidden: false,
     render: withLazyComp(Project),
     sensitive: false,
     meta: {
@@ -55,6 +59,18 @@ export const routes: RouteConfig[] = [
     name: '归档',
     render: withLazyComp(Gauge),
     sensitive: false,
+    hidden: false,
+    meta: {
+      icon: <InsertRowAboveOutlined />
+    }
+  },
+  {
+    path: "/Login",
+    exact: true,
+    name: '登录页面',
+    render: withLazyComp(Login),
+    hidden: true,
+    sensitive: false,
     meta: {
       icon: <InsertRowAboveOutlined />
     }
@@ -62,13 +78,15 @@ export const routes: RouteConfig[] = [
   {
     path: "/ArticleDetail",
     exact: true,
-    name: '热门',
+    hidden: true,
+    name: '详情',
     render: withLazyComp(ArticleDetail),
     meta: {
       icon: <FireOutlined />
     }
   },
   {
+    hidden: false,
     path: "/About",
     exact: true,
     name: '关于我',
@@ -80,6 +98,7 @@ export const routes: RouteConfig[] = [
   {
     path: "*",
     exact: true,
+    hidden: true,
     component: withLazyComp(FirstScreen),
     name: '首屏'
   },

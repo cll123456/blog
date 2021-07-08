@@ -1,5 +1,6 @@
 import { createActions, handleActions } from "redux-actions";
-import { IArticleCommentObj, IArticleDetailDialogObj, IArticleDetailStore, IArticleResData } from "../../../types/store/action/articleDetail";
+import { ILinkObj } from "../../../types/layout/articleDetail";
+import { IArticleCommentObj, IArticleDetailStore, IArticleResData } from "../../../types/store/action/articleDetail";
 
 const initData: IArticleDetailStore = {
   currentArticleId: '',
@@ -51,7 +52,7 @@ const createArticleActions = createActions({
    * @param dataArr 
    * @returns 
    */
-  SET_ARTICLE_DETAIL_DIALOG: (dataArr: IArticleDetailDialogObj[]) => dataArr,
+  SET_ARTICLE_DETAIL_DIALOG: (dataArr: ILinkObj[]) => dataArr,
 
   /**
    * 设置文章阅读数量，每一次打开，文章的阅读数量加1
@@ -61,17 +62,10 @@ const createArticleActions = createActions({
    * 添加评论文章
    */
   SET_ARTICLE_COMMENT: (data: IArticleCommentObj) => data,
-  /**
-   * 通过gitup来进行授权登录
-   */
-  LOGIN_BY_GITUP: () => { },
-  /**
-   * 从localstorage中获取评论的用户信息
-   */
-  Get_USER_INFO: () => { }
+ 
 })
 
-export const { setArticleDetailData, setArticleDetailDialog, setArticleDetailId, setArticleLikeNum, setArticleComment, setArticleDetailLoading, getArticleDetailData, loginByGitup } = createArticleActions;
+export const { setArticleDetailData, setArticleDetailDialog, setArticleDetailId, setArticleLikeNum, setArticleComment, setArticleDetailLoading, getArticleDetailData } = createArticleActions;
 
 
 const articleDetailReducers = handleActions<IArticleDetailStore, any>({

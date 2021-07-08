@@ -1,0 +1,50 @@
+@import './../../../assets/style/common.less';
+
+.commentDiv-container {
+  display: flex;
+  width: 100%;
+  .m-t-5();
+
+  .header {
+    margin-right: 12px;
+  }
+
+  .inputContent {
+    width: 100%;
+  }
+}
+
+
+
+.ant-modal-root {
+
+  .ant-modal-content {
+    background-color: var(--header-bg-hover-color);
+    .cursor-pointer();
+
+    .ant-modal-close-x {
+      .cursor-pointer();
+    }
+
+    .login-container {
+      display: flex;
+      justify-content: space-around;
+
+      .logo-container {
+        position: relative;
+
+        span {
+          position: absolute;
+          right: -24px;
+          top: -10px;
+        }
+      }
+    }
+
+    .ant-modal-footer>button {
+      .cursor-pointer();
+    }
+  }
+
+
+}

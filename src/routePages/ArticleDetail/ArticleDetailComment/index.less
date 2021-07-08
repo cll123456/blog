@@ -5,4 +5,15 @@
   background-color: var(--main-comp-bg-color);
   padding: 5px 10px;
   .m-b-5();
+
+  .replay-span {
+    color: @primary-color;
+    .cursor-pointer();
+    padding-left: 10px;
+    transition: all .35s;
+    &:hover{
+      color: fade( @primary-color, 40%);
+    }
+  }
+
 }

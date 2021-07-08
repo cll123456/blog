@@ -1,37 +1,128 @@
-import React, { ReactNode } from 'react'
-import { Comment, Avatar } from 'antd';
+import React, { Dispatch, ReactNode, useCallback, useEffect, useState } from 'react'
+import { Comment, Avatar, } from 'antd';
 import './index.less'
+import { IArticleCommentProps, IArticleDetailCommentObj } from '../../../types/store/action/articleDetail';
+import { composeTree } from '../../../utils/otherUtil';
+import { renderTime } from '../../../utils/dateUtil';
+import { connect } from 'react-redux';
+import { IStore } from '../../../types/store/action';
+import MyComment from '../../../components/common/MyComment';
 
-export default function ArticleDetailComment() {
-  const ExampleComment = ({ children }: { children?: ReactNode }) => (
-    <Comment
-    style={{background: 'transparent'}}
-      author={<a>小明</a>}
-      datetime={'2021-12-08'}
-      avatar={
-        <Avatar
-          src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-          alt="Han Solo"
-        />
-      }
-      content={
-        <p>
-          评论123.
-        </p>
-      }
-    >
-      {children}
-    </Comment>
-  );
+function ArticleDetailComment(props: IArticleCommentProps) {
+  // 评论组件数据
+  const [commentData, setCommentData] = useState(props.commentData);
+  // 注册监听事件
+  useEffect(() => {
+    document.addEventListener('click', hiddenReplayCommentFun)
+    return () => {
+      document.removeEventListener('click', hiddenReplayCommentFun)
+    }
+  }, [props.commentData]);
+  // 打开评论
+  const showReplayCommentFun = useCallback(
+    (id: string | number, e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+      e.nativeEvent.stopImmediatePropagation();
+      // 找到当前评论的数据
+      const res = commentData.map(p => {
+        if (p.id === id) {
+          p.hasShowCommentComp = true;
+        } else {
+          p.hasShowCommentComp = false;
+        }
+        return p;
+      });
+      setCommentData(res);
+    },
+    [props.commentData],
+  )
+  // 隐藏评论
+  const hiddenReplayCommentFun = useCallback(
+    () => {
+      const res = commentData.map(p => ({ ...p, hasShowCommentComp: false }));
+      setCommentData(res);
+    },
+    [props.commentData],
+  )
+
+
+  // 获取树形评论的数据
+  const treeComments = composeTree<IArticleDetailCommentObj>(commentData);
+  let res;
+  if (treeComments && treeComments.length > 0) {
+    // 生成评论节点
+    const genDom = function (list: IArticleDetailCommentObj[]) {
+      return list.map(p => {
+        if (!p.children || p.children.length === 0) {
+          return (
+            <Comment
+              key={p.id + p.createdAt}
+              style={{ background: 'transparent' }}
+              author={<a>{p.nickName}</a>}
+              datetime={renderTime(p.createdAt)}
+              avatar={
+                <Avatar
+                  src={p.avatar}
+                  alt={p.nickName}
+                />
+              }
+              content={
+                <div onClick={(e) => showReplayCommentFun(p.id, e)}>
+                  <p>
+                    {p.content}<span className='replay-span' > 回 复 </span>
+                  </p>
+                  {p.hasShowCommentComp ? <MyComment pid={p.pid}></MyComment> : ''}
+                </div>
+              }
+            >
+            </Comment>
+          )
+        } else {
+          return (
+            <Comment
+              key={p.id + p.createdAt}
+              style={{ background: 'transparent' }}
+              author={<a>{p.nickName}</a>}
+              datetime={renderTime(p.createdAt)}
+              avatar={
+                <Avatar
+                  src={p.avatar}
+                  alt={p.nickName}
+                />
+              }
+              content={
+                <div onClick={(e) => showReplayCommentFun(p.id, e)}>
+                  <p>
+                    {p.content}<span className='replay-span' > 回 复 </span>
+                  </p>
+                  {p.hasShowCommentComp ? <MyComment pid={p.pid}></MyComment> : ''}
+                </div>
+              }
+            >
+              {genDom(p.children)}
+            </Comment>
+          )
+        }
+      })
+    }
+    res = genDom(treeComments)
+  }
 
   return (
     <div className='articleDetailComment-container'>
-      <ExampleComment>
-        <ExampleComment>
-          <ExampleComment />
-          <ExampleComment />
-        </ExampleComment>
-      </ExampleComment>
+      {/* 评论弹框 */}
+      <MyComment  pid={0} />
+      {/* 评论的详情 */}
+      {res}
     </div>
   )
 }
+
+const mapStateToProps = (store: IStore) => ({
+  commentData: store.articleDetail.articleDetailData.comments
+})
+
+const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
+
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ArticleDetailComment)

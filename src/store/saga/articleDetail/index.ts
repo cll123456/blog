@@ -27,8 +27,6 @@ function astDialog(arr: marked.TokensList) {
       res.push({ level: `h${(arr[i] as any).depth}`, idName: text })
     }
   }
-
-
   return res;
 }
 

@@ -6,6 +6,7 @@ import * as CRR from 'connected-react-router';
 import { IGaugeStore } from "./gauge";
 import { IArticleStore } from "./article";
 import { IArticleDetailStore } from "./articleDetail";
+import { IUserStore } from "./user";
 export interface IStore {
   header: IHeaderStore,
   about: IAboutStore,
@@ -15,5 +16,6 @@ export interface IStore {
   gauge: IGaugeStore,
   article: IArticleStore,
   articleDetail: IArticleDetailStore,
+  user: IUserStore
   [key: string]: any
 }

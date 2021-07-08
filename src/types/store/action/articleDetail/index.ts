@@ -70,13 +70,25 @@ export interface IArticleDetailCommentObj {
   */
   accounter: string,
   /**
+   * 时间
+   */
+  createdAt: string,
+  /**
   * 评论邮箱
   */
   email: string,
   /**
   * 评论头像地址
   */
-  avatar: string
+  avatar: string,
+  /**
+   * 子元素
+   */
+  children: IArticleDetailCommentObj[],
+  /**
+   * 是否显示评论组件
+   */
+  hasShowCommentComp: boolean
 }
 
 
@@ -155,4 +167,11 @@ export interface IArticleDetailReadOrLike {
 export interface IArticleDetailRes {
   code: string,
   data: IArticleResData
+}
+
+/**
+ * 评论数据对象
+ */
+export interface IArticleCommentProps {
+  commentData: IArticleDetailCommentObj[]
 }
