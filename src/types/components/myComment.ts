@@ -1,6 +1,6 @@
 import { IArticleCommentObj } from "../store/action/articleDetail";
 import { ELoginType, IUserStore } from "../store/action/user";
-
+import * as CRR from 'connected-react-router'
 export interface IMyCommentProps {
   /**
    * 评论的pid
@@ -14,6 +14,10 @@ export interface IMyCommentProps {
    * 当前文章id
    */
   articleId: string | number,
+  /**
+   * 路由
+   */
+  router: CRR.RouterState,
   /**
    * 设置登录类型
    */

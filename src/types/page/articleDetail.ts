@@ -1,4 +1,4 @@
-import { IArticleDetailDialogObj, IArticleDetailStore } from "../store/action/articleDetail";
+import {  IArticleDetailStore } from "../store/action/articleDetail";
 import * as CRR from 'connected-react-router';
 export interface IArticleDetailProps {
   // 文章store数据
@@ -10,5 +10,5 @@ export interface IArticleDetailProps {
   /**
    * 设置目录
    */
-  setArticleDetailDialog:(arr: IArticleDetailDialogObj[]) => void
+  setArticleDetailDialog:(arr: any[]) => void
 }

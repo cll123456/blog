@@ -11,6 +11,20 @@
 
   .inputContent {
     width: 100%;
+    position: relative;
+
+    .ant-input-textarea-show-count::after {
+      margin-top: 10px;
+      .m-b-5();
+      margin-right: 80px;
+    }
+
+    .btn-div {
+      .m-t-5();
+      .m-b-5();
+      right: 0px;
+      position: absolute;
+    }
   }
 }
 
@@ -39,6 +53,8 @@
           top: -10px;
         }
       }
+
+
     }
 
     .ant-modal-footer>button {

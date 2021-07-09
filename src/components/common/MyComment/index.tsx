@@ -1,4 +1,4 @@
-import { Avatar, Modal } from 'antd'
+import { Avatar, Button, message, Modal } from 'antd'
 import TextArea from 'antd/lib/input/TextArea'
 import React, { Dispatch, useLayoutEffect, useState } from 'react'
 import './index.less'
@@ -31,6 +31,7 @@ function MyComment(props: IMyCommentProps) {
   // 确定
   const handleOk = () => {
     sessionStorage.setItem('@@loginType', curLoginType);
+    sessionStorage.setItem('@@lastPage', props.router.location.pathname + props.router.location.search);
     props.setUserLoginType(curLoginType);
     setIsModalVisible(false);
   };
@@ -47,8 +48,17 @@ function MyComment(props: IMyCommentProps) {
   }
   // 提交评论
   const submitComment = () => {
-    props.setCommentParam({ pid: props.pid as string, userId: props.user.userInfo.id as string, articleId: props.articleId as string, content: commentVal })
-    setCommentVal('');
+    if (!props.user.userInfo.id || props.user.userInfo.id === '') {
+      message.warning('请登录后在评论哦！');
+      return
+    } else {
+      if (commentVal === '' || commentVal.trimStart().trimEnd() === '') {
+        message.warning('请输入留言内容！');
+        return
+      }
+      props.setCommentParam({ pid: props.pid as string, userId: props.user.userInfo.id as string, articleId: props.articleId as string, content: commentVal })
+      setCommentVal('');
+    }
   }
 
   return (
@@ -65,8 +75,12 @@ function MyComment(props: IMyCommentProps) {
           autoSize={{ minRows: 2, maxRows: 5 }}
           allowClear showCount maxLength={1000}
           onClick={commentClickFun}
-          onPressEnter={submitComment}
-          placeholder='快来占沙发呀！！！,评论请按enter进行提交' />
+          placeholder='快来占沙发呀！！！' />
+        <div className='btn-div'>
+          <Button type="dashed" shape="round" onClick={submitComment}>
+            提 交
+          </Button>
+        </div>
       </div>
       {/* 登录方式 */}
       <Modal width="450px"
@@ -112,6 +126,7 @@ function MyComment(props: IMyCommentProps) {
 const mapStateToProps = (store: IStore, ownProps: { pid: string | number }) => ({
   user: store.user,
   articleId: store.articleDetail.currentArticleId,
+  router: store.router,
   ...ownProps
 })
 

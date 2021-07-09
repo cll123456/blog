@@ -1,5 +1,5 @@
 import { takeEvery, put, select, call } from "@redux-saga/core/effects";
-import { go } from "connected-react-router";
+import { go, push } from "connected-react-router";
 import { apiLoginByGitee, apiLoginByGiteeCallback, apiLoginByGithub, apiLoginByGithubCallback } from "../../../api/user";
 import { IStore } from "../../../types/store/action";
 import { ELoginType, IUserInfo, IUserRes, IUserUrlRes } from "../../../types/store/action/user";
@@ -62,17 +62,25 @@ function* setLoginCodeEffects() {
       userData = yield call(apiLoginByGiteeCallback, store.user.code);
       // 将数据存入localstorage
       localStorage.setItem('@@userInfo', JSON.stringify(userData.data.data));
-      // 返回上一页
-      yield put(go(-1));
+      if (userData.data.data.id) {
+        const path = sessionStorage.getItem('@@lastPage') as string
+        // 返回上一页
+        yield put(push(path));
+        window.location.reload();
+      }
     } else {
       userData = yield call(apiLoginByGithubCallback, store.user.code);
       // 将数据存入localstorage
       localStorage.setItem('@@userInfo', JSON.stringify(userData.data.data));
-      // 返回上一页
-      yield put(go(-1));
+      if (userData.data.data.id) {
+        const path = sessionStorage.getItem('@@lastPage') as string
+        // 返回上一页
+        yield put(push(path));
+        window.location.reload();
+      }
     }
   } catch (error) {
-    yield put(go(-1));
+    yield put(push('/'));
     message.error('回调授权失败，请切换另一种方式', 5);
     console.log('回调报错', error.message);
   }

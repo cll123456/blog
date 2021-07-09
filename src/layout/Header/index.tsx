@@ -1,6 +1,6 @@
 import React, { Dispatch, Ref, useState } from 'react'
 import './index.less'
-import {  Select, Switch, Tooltip } from 'antd';
+import { Select, Switch, Tooltip } from 'antd';
 import { Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { IHeaderRef, ILayoutHeader } from '../../types/layout/header';
@@ -9,7 +9,7 @@ import { connect, useStore } from 'react-redux';
 import { push } from 'connected-react-router';
 import { getTotalProjectData, setTotalProjectCondition } from '../../store/actions/project';
 import { getTotalArticleData, setTotalArticleCondition } from '../../store/actions/article';
-
+import imgHeader from './../../assets/imgs/header/atvar.jpg';
 const { Option } = Select;
 
 function Header(props: ILayoutHeader, ref: Ref<IHeaderRef>) {
@@ -29,7 +29,7 @@ function Header(props: ILayoutHeader, ref: Ref<IHeaderRef>) {
     <div className='header-container'>
       <div className="inner-container">
         <div className="header-img">
-          <img src='./../../src/assets/imgs/header/atvar.jpg'></img>
+          <img src={imgHeader}></img>
         </div>
         <div className="header-search">
           <Input.Group compact>
