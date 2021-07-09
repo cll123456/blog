@@ -1,15 +1,17 @@
-import { takeEvery, put, select, call } from "@redux-saga/core/effects"
+import { takeEvery, put, select, call, delay } from "@redux-saga/core/effects"
+import { message } from "antd";
 import marked from "marked";
-import { apiGetArticleDetailById, apiSetArticleReadOrLike } from "../../../api/articleDetail";
+import { apiGetArticleDetailById, apiSetArticleComment, apiSetArticleReadOrLike } from "../../../api/articleDetail";
 import { ILinkObj } from "../../../types/layout/articleDetail";
 import { IStore } from "../../../types/store/action";
-import { IArticleDetailReadOrLike, IArticleDetailRes } from "../../../types/store/action/articleDetail";
+import { IArticleDetailCommentRes, IArticleDetailReadOrLike, IArticleDetailRes } from "../../../types/store/action/articleDetail";
 import { formateStr } from "../../../utils/stringUtil";
-import { getArticleDetailData, setArticleDetailData, setArticleDetailDialog, setArticleDetailLoading, setArticleLikeNum } from "../../actions/articleDetail"
+import { getArticleDetailData, setArticleComment, setArticleCommentList, setArticleDetailData, setArticleDetailDialog, setArticleDetailLoading, setArticleLikeNum } from "../../actions/articleDetail"
 
 export default function* () {
   yield takeEvery(getArticleDetailData, getArticleDetailDataEffects);
   yield takeEvery(setArticleLikeNum, setLike);
+  yield takeEvery(setArticleComment, setArticleCommentEffects)
 }
 
 /**
@@ -37,7 +39,10 @@ function* getArticleDetailDataEffects() {
   const store: IStore = yield select();
   try {
     const res: IArticleDetailRes = yield call(apiGetArticleDetailById, store.articleDetail.currentArticleId)
-    yield put(setArticleDetailData(res.data))
+    // 设置文章
+    yield put(setArticleDetailData({ details: res.data.details }));
+    // 设置评论
+    yield put(setArticleCommentList(res.data.comments));
     // 语法分析
     const astRes = astDialog(marked.lexer(res.data.details.content));
     yield put(setArticleDetailDialog(astRes))
@@ -63,4 +68,20 @@ function* setLike() {
  */
 function* articleCreateReadOrLike(params: IArticleDetailReadOrLike) {
   yield call(apiSetArticleReadOrLike, params)
+}
+
+/**
+ * 留言评论
+ */
+function* setArticleCommentEffects() {
+  const store: IStore = yield select();
+  try {
+    const res: IArticleDetailCommentRes = yield call(apiSetArticleComment, store.articleDetail.commentParams);
+    yield put(setArticleCommentList(res.data));
+    // 评论成功后
+    message.success('留言成功', 3);
+
+  } catch (error) {
+
+  }
 }

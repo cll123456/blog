@@ -1,6 +1,6 @@
 import { Avatar, Modal } from 'antd'
 import TextArea from 'antd/lib/input/TextArea'
-import React, { Dispatch, useCallback, useLayoutEffect, useState } from 'react'
+import React, { Dispatch, useLayoutEffect, useState } from 'react'
 import './index.less'
 import { ELoginType } from '../../../types/store/action/user'
 import { connect } from 'react-redux'
@@ -8,6 +8,8 @@ import { IStore } from '../../../types/store/action'
 import { IMyCommentProps } from '../../../types/components/myComment'
 import { getUserInitInfo, setLoginType } from '../../../store/actions/user'
 import { CheckCircleFilled } from '@ant-design/icons'
+import { IArticleCommentObj } from '../../../types/store/action/articleDetail'
+import { setArticleComment } from '../../../store/actions/articleDetail'
 
 
 function MyComment(props: IMyCommentProps) {
@@ -43,7 +45,11 @@ function MyComment(props: IMyCommentProps) {
       setIsModalVisible(true);
     }
   }
-
+  // 提交评论
+  const submitComment = () => {
+    props.setCommentParam({ pid: props.pid as string, userId: props.user.userInfo.id as string, articleId: props.articleId as string, content: commentVal })
+    setCommentVal('');
+  }
 
   return (
     <div className="commentDiv-container">
@@ -59,6 +65,7 @@ function MyComment(props: IMyCommentProps) {
           autoSize={{ minRows: 2, maxRows: 5 }}
           allowClear showCount maxLength={1000}
           onClick={commentClickFun}
+          onPressEnter={submitComment}
           placeholder='快来占沙发呀！！！,评论请按enter进行提交' />
       </div>
       {/* 登录方式 */}
@@ -116,6 +123,10 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
   // 选择登录类型
   setUserLoginType(type: ELoginType) {
     dispatch(setLoginType(type))
+  },
+  // 设置文章参数
+  setCommentParam(commentObj: IArticleCommentObj) {
+    dispatch(setArticleComment(commentObj))
   }
 })
 

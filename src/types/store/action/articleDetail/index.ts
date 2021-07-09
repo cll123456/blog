@@ -8,11 +8,9 @@ export interface IArticleResData {
    * 文章详情
    */
   details: IArticleDetailObj,
-  /**
-   * 评论
-   */
-  comments: IArticleDetailCommentObj[]
+  
 }
+
 
 /**
  * 文章详情对象
@@ -127,6 +125,10 @@ export interface IArticleDetailStore {
    */
   articleDetailData: IArticleResData,
   /**
+   * 文章详情评论
+   */
+  articleDetailComments: IArticleDetailCommentObj[],
+  /**
    * 文章阅读点赞参数
    */
   readLikeParams: IArticleDetailReadOrLike,
@@ -146,32 +148,53 @@ export interface IArticleDetailStore {
 
 /**
  * 文章点赞或者阅读
- */ 
+ */
 export interface IArticleDetailReadOrLike {
   /**
      * 文章id
      */
-   articleId: string | number,
-   /**
-    * 是否增加阅读数量
-    */
-   readNum: boolean,
-   /**
-    * 是否进行点赞
-    */
-   likeNum: boolean
+  articleId: string | number,
+  /**
+   * 是否增加阅读数量
+   */
+  readNum: boolean,
+  /**
+   * 是否进行点赞
+   */
+  likeNum: boolean
 }
 /***
  * 文章详情返回数据
  */
 export interface IArticleDetailRes {
   code: string,
-  data: IArticleResData
+  data: {
+      details: IArticleDetailObj,
+      comments: IArticleDetailCommentObj[]
+  }
 }
 
 /**
  * 评论数据对象
  */
 export interface IArticleCommentProps {
-  commentData: IArticleDetailCommentObj[]
+  /**
+   * 评论数据
+   */
+  commentData: IArticleDetailCommentObj[],
+  /**
+   * 设置评论数据
+   */
+  setArticleCommentData: (arr: IArticleDetailCommentObj[]) => void,
+}
+
+
+/**
+ * 增加评论返回的结果
+ */
+export interface IArticleDetailCommentRes {
+  code: string,
+  data: {
+    data: IArticleDetailCommentObj[]
+  }
 }

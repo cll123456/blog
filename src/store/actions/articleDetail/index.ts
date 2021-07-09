@@ -13,9 +13,9 @@ const initData: IArticleDetailStore = {
       tags: '',
       readNum: 0,
       likeNum: 0
-    },
-    comments: []
+    }
   },
+  articleDetailComments: [],
   readLikeParams: {
     articleId: '',
     readNum: false,
@@ -61,11 +61,17 @@ const createArticleActions = createActions({
   /**
    * 添加评论文章
    */
-  SET_ARTICLE_COMMENT: (data: IArticleCommentObj) => data,
- 
+  SET_ARTICLE_COMMENT: (commentObj: IArticleCommentObj) => commentObj,
+  /**
+   * 添加文件列表
+   * @param articleDetailComments 
+   * @returns 
+   */
+  SET_ARTICLE_COMMENT_LIST: (data: IArticleCommentObj[]) => data
+
 })
 
-export const { setArticleDetailData, setArticleDetailDialog, setArticleDetailId, setArticleLikeNum, setArticleComment, setArticleDetailLoading, getArticleDetailData } = createArticleActions;
+export const { setArticleDetailData, setArticleCommentList, setArticleDetailDialog, setArticleDetailId, setArticleLikeNum, setArticleComment, setArticleDetailLoading, getArticleDetailData } = createArticleActions;
 
 
 const articleDetailReducers = handleActions<IArticleDetailStore, any>({
@@ -93,6 +99,13 @@ const articleDetailReducers = handleActions<IArticleDetailStore, any>({
     * 设置获取文章详情的评论
     */
   [setArticleComment.toString()]: (state, { payload }) => ({ ...state, commentParams: { ...state.commentParams, ...payload } }),
+  /**
+   * 设置文章评论列表
+   * @param state 
+   * @param param1 
+   * @returns 
+   */
+  [setArticleCommentList.toString()]: (state, { payload }) => ({ ...state, articleDetailComments: payload }),
 
 }, initData);
 
