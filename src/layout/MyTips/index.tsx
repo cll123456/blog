@@ -4,7 +4,7 @@ import { getTipData, } from '../../store/actions/myTips';
 import { IMyTipsProps } from '../../types/layout/myTips';
 import { IStore } from '../../types/store/action';
 import './index.less';
-import { Affix, Skeleton } from 'antd';
+import { Affix, Skeleton, Spin } from 'antd';
 import { useHistory } from 'react-router-dom';
 import * as H from 'history';
 import { push } from 'connected-react-router';
@@ -36,7 +36,7 @@ function Tip(props: IMyTipsProps) {
       </li>
     )
   })
-  let dom = (<></>);
+  let dom = (<div className='loading-div'></div>);
   if (props.myTips.dataList && props.myTips.dataList.length > 0) {
     if (props.router.location.pathname === '/ArticleDetail') {
       dom = (
@@ -59,21 +59,23 @@ function Tip(props: IMyTipsProps) {
             <h4>标签云</h4>
             <hr />
             <div className="tips-body">
-              <Skeleton loading={props.myTips.loading}>
                 <ul>
                   {liDom}
                 </ul>
-              </Skeleton>
             </div>
           </div>
         </Affix>
       )
     }
   } else {
-    dom = (<div><h4></h4><div></div></div>)
+    dom = (<div className='loading-div'><h4></h4><div></div></div>)
   }
 
-  return dom;
+  return (
+    <Spin spinning={props.myTips.loading}>
+        {dom}
+    </Spin>
+  );
 }
 
 /**

@@ -98,20 +98,22 @@ class Article extends React.PureComponent<IArticleProps, IArticleState> {
     return (
       <div className='article-container'>
         {/* 文章轮播图 */}
-        <ArticleCarousel
-          goToArticleDetail={this.props.goToArticleDetail}
-          timer={5000}
-          data={this.props.hotArticleData}
-          curIndex={this.state.carouselObj.curIndex}
-          onPre={this.onPre}
-          onNext={this.onNext} />
+        <Spin spinning={this.props.hotArticleLoading}>
+          <ArticleCarousel
+            goToArticleDetail={this.props.goToArticleDetail}
+            timer={5000}
+            data={this.props.hotArticleData}
+            curIndex={this.state.carouselObj.curIndex}
+            onPre={this.onPre}
+            onNext={this.onNext} />
+        </Spin>
         {/* 全部文章 */}
         <Divider dashed orientation="left">全部文章</Divider>
         <Spin spinning={this.props.totalArticleLoading}>
           {/* 全部文章列表 */}
-          <ArticleList 
-          articleList={this.props.totalArticleData}   
-          goToArticleDetail={this.props.goToArticleDetail}></ArticleList>
+          <ArticleList
+            articleList={this.props.totalArticleData}
+            goToArticleDetail={this.props.goToArticleDetail}></ArticleList>
           {/* 分页 */}
           <div className="page-container">
             <Pagination

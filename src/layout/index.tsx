@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { Suspense, useState } from 'react'
 import { Provider } from 'react-redux'
 import { renderRoutes } from 'react-router-config'
 import { BrowserRouter } from 'react-router-dom'
@@ -7,17 +7,24 @@ import store, { history } from '../store'
 import { ConnectedRouter } from 'connected-react-router'
 import { changeBgColor, changeHeaderBgColor, changeMainCompBgColor } from '../store/actions/header'
 import { EbgColor, EHeaderBgColor, EMainBodyCompBgColor } from '../types/store/action/header'
-import Header from './Header'
-import MyMenu from './MyMenu'
+// import Header from './Header'
+const Header = React.lazy(() => import('./Header'));
+const MyMenu = React.lazy(() => import('./MyMenu'));
 import './index.less'
-import dark from './../assets/style/index.dark.less'
-import lighter from './../assets/style/index.less'
-import MyTips from './MyTips'
-import Footer from './Footer'
-import MyParticles from '../components/common/particles/MyParticles'
+import dark from './../assets/style/index.dark.less';
+import lighter from './../assets/style/index.less';
+// import MyTips from './MyTips'
+const MyTips = React.lazy(() => import('./MyTips'));
+const Footer = React.lazy(() => import('./Footer'));
+// import Footer from './Footer'
+// import MyParticles from '../components/common/particles/MyParticles'
+const MyParticles = React.lazy(() => import('../components/common/particles/MyParticles'));
 import { BackTop } from 'antd';
-import Like from './Like'
-import ArticleDialog from './ArticleDialog'
+import Loading from '../components/common/Loading'
+// import Like from './Like'
+const Like = React.lazy(() => import('./Like'));
+const ArticleDialog = React.lazy(() => import('./ArticleDialog'));
+// import ArticleDialog from './ArticleDialog'
 
 
 export default function Layout() {
@@ -36,17 +43,17 @@ export default function Layout() {
     if (checked) {
       // 明亮主题
       addSkin(lighter)
+      reloadComp({});
     } else {
-      // 暗色主题
       addSkin(dark)
+      reloadComp({});
     }
-    reloadComp({});
   }
   // 组转body,适应首屏
   let body = composeBody(handleSkin);
 
   return (
-    <>
+    <Suspense fallback={<Loading />} >
       <BrowserRouter>
         <Provider store={store}>
           <ConnectedRouter history={history}>
@@ -54,7 +61,7 @@ export default function Layout() {
           </ConnectedRouter>
         </Provider>
       </BrowserRouter >
-    </>
+    </Suspense>
   )
 }
 
@@ -66,7 +73,7 @@ export default function Layout() {
 function composeBody(handleSkin: (checked: boolean) => void) {
   // 获取当前的路径
   const pathname = window.location.pathname;
-  
+
   // 判断当前的路径是否在网站主体页面
   const isNeedHeader = routes.filter(r => r.path === pathname).length > 0;
   let body: JSX.Element = <></>;

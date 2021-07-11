@@ -44,7 +44,7 @@ function Project(prop: IProjectProps) {
     }
     if (cardList.length === 0) {
       // 获取热门项目
-      prop.setTotalCondition({ pageNo: storeData.router.location.query.pageNo, title:  storeData.router.location.query.title})
+      prop.setTotalCondition({ pageNo: storeData.router.location.query.pageNo, title: storeData.router.location.query.title })
     }
 
   }, [])
@@ -94,7 +94,9 @@ function Project(prop: IProjectProps) {
   return (
     <div className='project-container'>
       {/* 轮播图 */}
-      <ProCarousel {...proCarouselObj} data={hotProjectData} onPre={handlePre} onNext={handleNext}></ProCarousel>
+      <Spin spinning={state.totalProjectLoading}  >
+        <ProCarousel {...proCarouselObj} data={hotProjectData} onPre={handlePre} onNext={handleNext}></ProCarousel>
+      </Spin>
       {/* 全部文章 */}
       <Divider dashed orientation="left">全部项目</Divider>
       {/* 文章列表 */}

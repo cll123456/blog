@@ -60,6 +60,10 @@ export interface IArticleStore {
    */
   totalArticleLoading: boolean,
   /**
+   * 热门文章是否加载中
+   */
+  hotArticleLoading: boolean,
+  /**
    * 全部文章查询条件
    */
   totalArticleCondition: IArticleParams,

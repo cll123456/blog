@@ -3,6 +3,7 @@ import { IArticleObjParams, IArticleParams, IArticleStore } from "../../../types
 
 const initData: IArticleStore = {
   hotArticleData: [],
+  hotArticleLoading: false,
   totalArticleLoading: false,
   totalArticleCondition: {
     pageNo: 1,
@@ -27,6 +28,12 @@ const articleActions = createActions({
    * @returns 
    */
   SET_TOTAL_ARTICLE_LOADING: (loading: boolean) => loading,
+  /**
+   * 设置热门文件加载中
+   * @param loading 
+   * @returns 
+   */
+  SET_HOT_ARTICLE_LOADING: (loading: boolean) => loading,
   /**
    * 设置所以的文章
    * @param data 
@@ -56,7 +63,7 @@ const articleActions = createActions({
 /**
  * 对外导出的actions
  */
-export const { setHotArticleData, setTotalArticleData, setTotalArticleLoading, setTotalArticleTotal, setTotalArticleCondition, getTotalArticleData, getHotArticleData } = articleActions;
+export const { setHotArticleData, setTotalArticleData, setHotArticleLoading, setTotalArticleLoading, setTotalArticleTotal, setTotalArticleCondition, getTotalArticleData, getHotArticleData } = articleActions;
 
 
 const articleReducers = handleActions<IArticleStore, any>({
@@ -73,13 +80,20 @@ const articleReducers = handleActions<IArticleStore, any>({
   */
   [setTotalArticleLoading.toString()]: (state, { payload }) => ({ ...state, ...{ totalArticleLoading: payload } }),
   /**
+   * 设置热门文章加载中
+   * @param state 
+   * @param param1 
+   * @returns 
+   */
+  [setHotArticleLoading.toString()]: (state, { payload }) => ({ ...state, ...{ hotArticleLoading: payload } }),
+  /**
    * 设置文章总数
    */
   [setTotalArticleTotal.toString()]: (state, { payload }) => ({ ...state, ...{ articleTotal: payload } }),
   /**
   * 判断是否位设置热门文章条件
   */
-  [setTotalArticleCondition.toString()]: (state, { payload }) => ({ ...state, totalArticleCondition: { ...state.totalArticleCondition, ...payload,  } }),
+  [setTotalArticleCondition.toString()]: (state, { payload }) => ({ ...state, totalArticleCondition: { ...state.totalArticleCondition, ...payload, } }),
 }, initData);
 
 export default articleReducers;

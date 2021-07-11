@@ -2,7 +2,7 @@ import { takeEvery, call, put, select } from "@redux-saga/core/effects"
 import { apiGetArticleByParams, apiGetHotArticle } from "../../../api/article";
 import { IStore } from "../../../types/store/action";
 import { IArticleListRes, IArticleParams } from "../../../types/store/action/article";
-import { getHotArticleData, getTotalArticleData, setHotArticleData, setTotalArticleCondition, setTotalArticleData, setTotalArticleLoading, setTotalArticleTotal } from "../../actions/article"
+import { getHotArticleData, getTotalArticleData, setHotArticleData, setHotArticleLoading, setTotalArticleCondition, setTotalArticleData, setTotalArticleLoading, setTotalArticleTotal } from "../../actions/article"
 
 export default function* () {
   yield takeEvery(getHotArticleData, getHotArticleDataEffects);
@@ -13,11 +13,14 @@ export default function* () {
  * 获取热门文章数据
  */
 function* getHotArticleDataEffects() {
+  yield put(setHotArticleLoading(true));
   try {
     const res: IArticleListRes = yield call(apiGetHotArticle);
     yield put(setHotArticleData(res.data.rows))
   } catch (err) {
     throw Error('查询热门文章失败' + err.message)
+  } finally {
+    yield put(setHotArticleLoading(false));
   }
 }
 
@@ -36,7 +39,7 @@ function* getTotalArticleDataEffects() {
     // set data
     yield put(setTotalArticleData(res.data.rows))
   } catch (error) {
-    throw Error('查询热门文章失败' + error.message)
+    throw Error('查询全部文章失败' + error.message)
   } finally {
     yield put(setTotalArticleLoading(false));
   }
