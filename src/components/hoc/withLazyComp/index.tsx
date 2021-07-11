@@ -9,10 +9,10 @@ export default function withLazyComp(Comp: ComponentType) {
   return function _withLazyComp() {
     return (
       <>
-        <React.Suspense fallback={<Loading />}>
+        {/* <React.Suspense fallback={<Loading />}> */}
           {/* <Loading /> */}
           <Comp />
-        </React.Suspense>
+        {/* </React.Suspense> */}
       </>
     )
   }
