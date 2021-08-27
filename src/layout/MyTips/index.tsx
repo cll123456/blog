@@ -96,7 +96,7 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => {
   return {
     onClickTips(id: string, history: H.History) {
       const storeData = store.getState() as IStore;
-      dispatch(setTotalArticleCondition({ tagCloudId: id }));
+      dispatch(setTotalArticleCondition({ tagCloudId: id, pageNo: 1 }));
       dispatch(getTotalArticleData());
       dispatch(push(`/Article?pageNo=1&title=${storeData.article.totalArticleCondition.title}&tagCloudId=${id}`));
     },
