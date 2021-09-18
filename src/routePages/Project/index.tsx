@@ -131,7 +131,7 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
   setTotalCondition(condition: object) {
     dispatch(setTotalProjectCondition(condition));
     const conditions = (store.getState().project as IProjectStore).totalProjectCondition
-    dispatch(push(`/Project?pageNo=${conditions.pageNo}&title=${conditions.title}`))
+    dispatch(push(`/Project?pageNo=${conditions.pageNo || ''}&title=${conditions.title || ''}`))
     dispatch(getTotalProjectData())
   }
 })
